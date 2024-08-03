@@ -16,7 +16,7 @@ interface PageProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-function PaginationModule({ totalPages, currentPage, setCurrentPage }: PageProps) {
+const PaginationModule = ({ totalPages, currentPage, setCurrentPage }: PageProps) => {
   const [startPage, setStartPage] = useState(1);
   const handlePageClick = (page: number) => {
     setCurrentPage(page);
@@ -68,6 +68,6 @@ function PaginationModule({ totalPages, currentPage, setCurrentPage }: PageProps
       </div>
     </div>
   );
-}
+};
 
 export default PaginationModule;

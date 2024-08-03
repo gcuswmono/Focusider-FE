@@ -5,7 +5,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-function PaginationButtonAtom({ onPage = false, page, onClick, disabled = false }: ButtonProps) {
+const PaginationButtonAtom = ({ onPage = false, page, onClick, disabled = false }: ButtonProps) => {
   return (
     <button
       type="button"
@@ -20,6 +20,6 @@ function PaginationButtonAtom({ onPage = false, page, onClick, disabled = false 
       </div>
     </button>
   );
-}
+};
 
 export default PaginationButtonAtom;
