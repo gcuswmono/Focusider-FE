@@ -8,7 +8,7 @@ interface QuizHeaderProps {
 
 const QuizHeaderModule = ({ number, title }: QuizHeaderProps) => {
   return (
-    <div className="flex flex-col gap-y-2 bg-primary-200">
+    <div className="flex flex-col gap-y-2">
       <QuizNumberAtom number={number} />
       <QuizTitleAtom title={title} />
     </div>
