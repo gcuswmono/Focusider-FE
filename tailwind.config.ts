@@ -41,6 +41,9 @@ const config: Config = {
         'cus-300': '#323232',
         'stroke-100': '#DBDBDB',
       },
+      fontFamily: {
+        gowun: ['var(--gowun)'],
+      },
     },
   },
   plugins: [],
