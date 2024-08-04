@@ -1,9 +1,10 @@
 interface InfoTextAtomProps {
   text: string;
+  className?: string;
 }
 
-const InfoTextAtom = ({ text }: InfoTextAtomProps) => {
-  return <p className="flex items-center text-4 font-semibold">{text}</p>;
+const InfoTextAtom = ({ text, className }: InfoTextAtomProps) => {
+  return <p className={`flex items-center ${className}`}>{text}</p>;
 };
 
 export default InfoTextAtom;
