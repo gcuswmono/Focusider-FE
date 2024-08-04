@@ -5,3 +5,5 @@ export { default as ChevronLeftEmptyIcon } from './chevronLeftEmpty.svg';
 export { default as ChevronRightBlackIcon } from './chevronRightBlack.svg';
 export { default as ChevronLeftBlackIcon } from './chevronLeftBlack.svg';
 export { default as PointScanIcon } from './pointScan.svg';
+export { default as XCircleIcon } from './xCircle.svg';
+export { default as CheckCircleIcon } from './checkCircle.svg';
