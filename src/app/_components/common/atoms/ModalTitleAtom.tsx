@@ -5,7 +5,7 @@ interface ModalTitleAtomProps {
 }
 
 const ModalTitleAtom = ({ title }: ModalTitleAtomProps) => {
-  return <div className="text-1 w-full text-center font-bold">{title}</div>;
+  return <div className="w-full text-center text-1 font-bold">{title}</div>;
 };
 
 export default ModalTitleAtom;

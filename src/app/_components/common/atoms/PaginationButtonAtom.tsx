@@ -9,7 +9,7 @@ const PaginationButtonAtom = ({ onPage = false, page, onClick, disabled = false 
   return (
     <button
       type="button"
-      className={`text-4 flex h-12 w-12 items-center justify-center ${disabled ? 'text-sub-200 cursor-not-allowed' : ''}`}
+      className={`flex h-12 w-12 items-center justify-center text-4 ${disabled ? 'cursor-not-allowed text-sub-200' : ''}`}
       onClick={!disabled ? onClick : undefined}
       disabled={disabled}
     >

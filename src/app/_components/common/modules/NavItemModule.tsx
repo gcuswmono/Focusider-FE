@@ -28,8 +28,8 @@ const NavItemModule = ({
       }`}
       onClick={onClick}
     >
-      <IconAtom src={iconSrc} alt={iconAlt} />
-      <InfoTextAtom text={text} />
+      <IconAtom src={iconSrc} alt={iconAlt} width={64} height={64} />
+      <InfoTextAtom className="text-[32px]" text={text} />
     </div>
   );
 };
