@@ -1,3 +1,5 @@
+import { Button } from '@nextui-org/react';
+
 interface ButtonProps {
   buttonStyle: 'light' | 'dark';
   onClick?: () => void;
@@ -37,7 +39,7 @@ const ButtonAtom = ({ buttonStyle, text, onClick, type, width, height, fontSize 
   const buttonTypeClasses = getButtonType(buttonStyle);
 
   return (
-    <button
+    <Button
       type={type}
       onClick={onClick}
       className={`${baseClasses} ${widthClasses} ${buttonTypeClasses}`}
@@ -48,7 +50,7 @@ const ButtonAtom = ({ buttonStyle, text, onClick, type, width, height, fontSize 
       }}
     >
       {text}
-    </button>
+    </Button>
   );
 };
 
