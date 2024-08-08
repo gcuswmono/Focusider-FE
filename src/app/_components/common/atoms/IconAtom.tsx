@@ -9,7 +9,7 @@ interface IconAtomProps {
 }
 
 const IconAtom = ({ src, alt, width, height, className = '' }: IconAtomProps) => {
-  return <Image src={src} alt={alt} width={width} height={height} className={className} />;
+  return <Image src={src} alt={alt} width={width} height={height} className={className} priority />;
 };
 
 export default IconAtom;
