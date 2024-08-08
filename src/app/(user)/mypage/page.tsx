@@ -1,5 +1,9 @@
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import Image from 'next/image';
+import profileDefault from '@/app/_assets/icons/profileDefault.svg';
+import profileEdit from '@/app/_assets/icons/profileEdit.svg';
+import InfoSectionModule from '@/app/_components/common/modules/InfoSectionModule';
+import { Button } from '@nextui-org/react';
 
 export default function mypage() {
   const userInfo = [
@@ -14,15 +18,27 @@ export default function mypage() {
     <div className="flex h-full w-full items-center justify-center">
       <div className="mt-[74px] h-[1118px] w-[1804px] overflow-hidden">
         <div className="ml-[144px] mt-[16px] text-[48px] leading-[66px]">마이페이지</div>
-        <div className="ml-[144px] mt-[142px]">
-          <Image src="profileDefault.svg" alt="profileDefault" height={256} width={236} priority />
+        <div className="relative ml-[144px] mt-[142px] h-[256px] w-[236px]">
+          <div className="absolute left-0 top-0">
+            <Image src={profileDefault} alt="profileDefault" height={236} width={236} priority />
+          </div>
+          <Button
+            className="absolute left-[144px] top-[162px] bg-transparent outline-none"
+            type="button"
+          >
+            <Image src={profileEdit} alt="profileEdit" height={90} width={90} priority />
+          </Button>
         </div>
         <div className="ml-[144px] mt-[60px] h-[420px] w-[570px]">
           <div className="flex h-[44px] flex-col space-y-[50px]">
             {userInfo.map((item) => (
-              <div key={item.id} className="flex w-[570px] text-[32px] leading-[44px]">
-                <span className="w-[120px] text-gray-500">{item.label}</span>
-                <span className="ml-[200px]">{item.value}</span>
+              <div key={item.id} className="flex w-[570px]">
+                <InfoSectionModule
+                  title={item.label}
+                  titleClassName="w-[120px] text-gray-500 text-[32px] leading-[44px]"
+                  content={item.value}
+                  contentClassName="ml-[200px] text-[32px] leading-[44px]"
+                />
               </div>
             ))}
           </div>
