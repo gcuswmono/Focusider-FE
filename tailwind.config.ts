@@ -20,8 +20,9 @@ const config: Config = {
         '5': '12px',
         '6': '10px',
         h1: '42px',
-        h2: '32px',
-        h3: '24px',
+        h2: '36px',
+        h3: '32px',
+        h4: '24px',
       },
       colors: {
         transparent: 'transparent',
@@ -43,6 +44,9 @@ const config: Config = {
       },
       fontFamily: {
         gowun: ['var(--gowun)'],
+      },
+      screens: {
+        tablet: '1280px',
       },
     },
   },
