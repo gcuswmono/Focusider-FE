@@ -15,7 +15,7 @@ import {
 
 const NAV_ITEMS = [
   {
-    path: '/',
+    path: '/home',
     iconSrcActive: HomePrimaryIcon,
     iconSrcInactive: HomeGrayIcon,
     iconAlt: 'Home',
@@ -49,8 +49,8 @@ const NavBarContainer = () => {
   const router = useRouter();
 
   return (
-    <nav className="sticky bottom-0 border-t border-stroke-100 bg-white">
-      <div className="flex h-[174px] w-full justify-between px-96 py-7">
+    <nav className="border-t border-stroke-100 bg-primary-100">
+      <div className="flex w-full justify-between px-52 py-7">
         {NAV_ITEMS.map((item) => (
           <NavItemModule
             key={item.path}
