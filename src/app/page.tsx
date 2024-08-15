@@ -45,7 +45,7 @@ const LoginPage = () => {
                   error={error === '사용자를 찾을 수 없습니다.' ? error : null}
                 />
                 <LoginInput
-                  type="pwd"
+                  type="password"
                   name="password"
                   value={form.password}
                   onChange={onChange}
@@ -68,7 +68,7 @@ const LoginPage = () => {
               아직 회원이 아니신가요?{' '}
               <button
                 className="font-semibold underline hover:cursor-pointer"
-                onClick={() => router.push('/signup')}
+                onClick={() => router.push('/signup/1')}
               >
                 회원가입 하기
               </button>
