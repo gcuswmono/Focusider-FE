@@ -9,7 +9,7 @@ interface SignupPageProps {
   pageNum: string;
 }
 
-const SignupPage = ({ pageNum }: SignupPageProps) => {
+const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
   const router = useRouter();
   const [form, setForm] = useState({
     accountId: '',
@@ -117,4 +117,4 @@ const SignupPage = ({ pageNum }: SignupPageProps) => {
   );
 };
 
-export default SignupPage;
+export default CreateAccountForm;
