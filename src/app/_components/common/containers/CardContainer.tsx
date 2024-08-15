@@ -12,6 +12,8 @@ interface CardContainerProps {
   backgroundColor: string;
   titleColor: string;
   subtitleColor: string;
+  size: 'large' | 'small';
+  onClick: () => void;
 }
 
 const CardContainer = ({
@@ -24,19 +26,32 @@ const CardContainer = ({
   backgroundColor,
   titleColor,
   subtitleColor,
+  size,
+  onClick,
 }: CardContainerProps) => {
+  const cardHeight = size === 'large' ? 'h-[484px]' : 'h-[233px]';
+
   return (
-    <div className={`w-[440px] rounded-[20px] p-4 ${backgroundColor}`}>
+    <div
+      role="presentation"
+      className={`w-[440px] rounded-[20px] p-6 ${backgroundColor} ${cardHeight}`}
+      onClick={onClick}
+    >
       <div className="mb-4 flex items-start justify-between">
         <div className="flex flex-col items-start">
-          <InfoTextAtom text={title} className={`text-2xl font-bold ${titleColor}`} />
-          {subtitle && <InfoTextAtom text={subtitle} className={`text-5 ${subtitleColor}`} />}
+          <InfoTextAtom text={title} className={`text-h4 font-bold ${titleColor}`} />
+          {subtitle && (
+            <InfoTextAtom
+              text={subtitle}
+              className={`mt-0.5 whitespace-pre-line pl-0.5 text-4 ${subtitleColor}`}
+            />
+          )}
         </div>
         {infoModuleSrc && infoModuleAlt && infoModuleText && (
           <InfoModule src={infoModuleSrc} alt={infoModuleAlt} text={infoModuleText} />
         )}
       </div>
-      <div>{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 };
