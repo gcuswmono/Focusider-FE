@@ -34,7 +34,7 @@ const CardContainer = ({
   return (
     <div
       role="presentation"
-      className={`w-[440px] rounded-[20px] p-6 ${backgroundColor} ${cardHeight}`}
+      className={`w-[460px] rounded-[20px] p-7 ${backgroundColor} ${cardHeight}`}
       onClick={onClick}
     >
       <div className="mb-4 flex items-start justify-between">
