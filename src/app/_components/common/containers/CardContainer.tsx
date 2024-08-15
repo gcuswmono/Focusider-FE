@@ -39,7 +39,7 @@ const CardContainer = ({
     >
       <div className="mb-4 flex items-start justify-between">
         <div className="flex flex-col items-start">
-          <InfoTextAtom text={title} className={`text-h4 font-bold ${titleColor}`} />
+          <InfoTextAtom text={title} className={`text-h4 font-semibold ${titleColor}`} />
           {subtitle && (
             <InfoTextAtom
               text={subtitle}
