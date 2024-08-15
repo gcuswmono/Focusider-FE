@@ -24,3 +24,4 @@ export { default as EmptyProfileIcon } from './emptyProfile.svg';
 export { default as QuizCoverIcon } from './quizCover.svg';
 export { default as ReportCoverIcon } from './reportCover.svg';
 export { default as CalendarIcon } from './calendar.svg';
+export { default as PeopleIcon } from './people.svg';

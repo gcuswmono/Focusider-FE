@@ -7,6 +7,7 @@ import Image from 'next/image';
 import {
   CalendarIcon,
   EmptyProfileIcon,
+  PeopleIcon,
   QuizCoverIcon,
   ReportCoverIcon,
 } from '@/app/_assets/icons';
@@ -43,6 +44,9 @@ export default function Login() {
               backgroundColor="bg-primary-300"
               titleColor="text-white"
               subtitleColor="text-stroke-100"
+              infoModuleSrc={PeopleIcon}
+              infoModuleAlt="icon"
+              infoModuleText="인문"
             >
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
