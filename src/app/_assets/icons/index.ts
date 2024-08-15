@@ -21,3 +21,6 @@ export { default as LogoutIcon } from './logout.svg';
 export { default as ErrorIcon } from './error.svg';
 export { default as AddProfileIcon } from './addProfile.svg';
 export { default as EmptyProfileIcon } from './emptyProfile.svg';
+export { default as QuizCoverIcon } from './quizCover.svg';
+export { default as ReportCoverIcon } from './reportCover.svg';
+export { default as CalendarIcon } from './calendar.svg';
