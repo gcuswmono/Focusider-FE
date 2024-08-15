@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Gowun_Dodum, Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
+import PageContainer from '@/app/_components/layout/PageContainer';
 
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 const gowunDodum = Gowun_Dodum({
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr" className={`${notoSansKR.className} ${gowunDodum.variable}`}>
-      <body>{children}</body>
+      <body>
+        <PageContainer>{children}</PageContainer>
+      </body>
     </html>
   );
 }
