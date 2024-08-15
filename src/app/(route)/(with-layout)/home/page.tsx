@@ -24,7 +24,7 @@ export default function Login() {
   }, []);
 
   return (
-    <section className="flex h-dvh w-full items-center justify-center bg-primary-100">
+    <section className="flex h-full w-full items-center justify-center bg-primary-100">
       <div className="flex flex-col items-center justify-center gap-y-6 px-8">
         <div className="flex w-full justify-between">
           <div className="flex h-10 items-center gap-x-3">
