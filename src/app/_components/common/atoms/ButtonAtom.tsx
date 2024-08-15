@@ -8,6 +8,7 @@ interface ButtonProps {
   width?: 'fixed' | 'grow' | string;
   height?: string;
   fontSize?: string;
+  rounded?: 'full' | 'rounded';
 }
 
 const getButtonType = (buttonStyle: 'light' | 'dark'): string => {
@@ -32,17 +33,37 @@ const getWidthClasses = (width: 'fixed' | 'grow' | string | undefined): string =
   }
 };
 
-const ButtonAtom = ({ buttonStyle, text, onClick, type, width, height, fontSize }: ButtonProps) => {
-  const baseClasses =
-    'inline-flex items-center justify-center text-4 px-3.5 font-semibold rounded-full';
+const getRoundedClasses = (rounded: 'full' | 'rounded' | undefined): string => {
+  switch (rounded) {
+    case 'full':
+      return 'rounded-full';
+    case 'rounded':
+      return 'rounded';
+    default:
+      return 'rounded-full';
+  }
+};
+
+const ButtonAtom = ({
+  buttonStyle,
+  text,
+  onClick,
+  type,
+  width,
+  height,
+  fontSize,
+  rounded,
+}: ButtonProps) => {
+  const baseClasses = 'inline-flex items-center justify-center text-4 px-3.5 font-semibold';
   const widthClasses = getWidthClasses(width);
   const buttonTypeClasses = getButtonType(buttonStyle);
+  const roundedClasses = getRoundedClasses(rounded);
 
   return (
     <Button
       type={type}
       onClick={onClick}
-      className={`${baseClasses} ${widthClasses} ${buttonTypeClasses}`}
+      className={`${baseClasses} ${widthClasses} ${buttonTypeClasses} ${roundedClasses}`}
       style={{
         ...(width && !['fixed', 'grow'].includes(width) ? { width } : {}),
         ...(height ? { height } : {}),
