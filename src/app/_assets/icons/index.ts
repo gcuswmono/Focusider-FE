@@ -19,3 +19,5 @@ export { default as PersonPrimaryIcon } from './personPrimary.svg';
 export { default as PersonGrayIcon } from './personGray.svg';
 export { default as LogoutIcon } from './logout.svg';
 export { default as ErrorIcon } from './error.svg';
+export { default as AddProfileIcon } from './addProfile.svg';
+export { default as EmptyProfileIcon } from './emptyProfile.svg';
