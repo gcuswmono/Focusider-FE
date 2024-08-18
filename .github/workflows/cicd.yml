@@ -35,8 +35,19 @@ jobs:
       - name: Docker Login and Deploy Docker Container
         run: |
           echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker rmi $DOCKERHUB_USERNAME/focusider-fe:latest || true
+      
+          # 이미지가 존재하는지 확인하고 삭제
+          if [[ "$(docker images -q $DOCKERHUB_USERNAME/focusider-fe:latest 2> /dev/null)" != "" ]]; then
+            docker rmi $DOCKERHUB_USERNAME/focusider-fe:latest
+          fi
+      
           docker pull $DOCKERHUB_USERNAME/focusider-fe:latest
-          docker stop focusider-fe || true
-          docker rm focusider-fe || true
+      
+          # 컨테이너가 존재하는지 확인하고 삭제
+          if [ "$(docker ps -aq -f name=focusider-fe)" ]; then
+            docker stop focusider-fe
+            docker rm focusider-fe
+          fi
+      
           docker run -d --name focusider-fe -p 3000:3000 $DOCKERHUB_USERNAME/focusider-fe:latest
+
