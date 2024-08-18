@@ -1,0 +1,48 @@
+name: Build and Deploy on EC2
+
+on:
+  push:
+    branches: ['develop']
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    name: Build and Deploy on EC2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'pnpm' # pnpm 캐시 사용
+
+      - name: Install Dependencies
+        run: |
+          npm install -g pnpm@latest
+          pnpm install
+
+      - name: Build Project
+        run: pnpm run build
+
+      - name: Build and Push Docker Image
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+        run: |
+          docker build --cache-from mango0422/focusider-fe:latest -t mango0422/focusider-fe:latest .
+          echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          docker push $DOCKERHUB_USERNAME/focusider-fe:latest
+
+      - name: Docker Login and Deploy Docker Container
+        run: |
+          echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker rmi $DOCKERHUB_USERNAME/focusider-fe:latest || true
+          docker pull $DOCKERHUB_USERNAME/focusider-fe:latest
+          docker stop focusider-fe || true
+          docker rm focusider-fe || true
+          docker run -d --name focusider-fe -p 3000:3000 $DOCKERHUB_USERNAME/focusider-fe:latest

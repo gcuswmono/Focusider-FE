@@ -1,44 +1,11 @@
-version: '3'
+version: '3.8'
+
 services:
-  mysql:
-    container_name: mysql
-    image: mysql:8.0.30
-    restart: on-failure
-    environment:
-      - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=api
-      - MYSQL_USER=api
-      - MYSQL_PASSWORD=api
-      - TZ=Asia/Seoul
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-    ports:
-      - '3306:3306'
-    healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      timeout: 40s
-      retries: 10
-    volumes:
-      - ./db/conf.d:/etc/mysql/conf.d
-      - ./db/data:/var/lib/mysql
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
-  spring:
-    container_name: spring
-    ports:
-      - '8082:8082'
-    image: mango0422/focusider-be:latest
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/api
-      SPRING_DATASOURCE_USERNAME: 'api'
-      SPRING_DATASOURCE_PASSWORD: 'api'
-  nextjs:
-    container_name: nextjs
+  focusider-fe:
     image: mango0422/focusider-fe:latest
+    container_name: my-app
     ports:
       - '3000:3000'
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
+    restart: always
