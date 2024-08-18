@@ -23,9 +23,6 @@ jobs:
       - name: pnpm 설치중..
         run: npm install -g pnpm
 
-      - name: Build Project
-        run: pnpm run build
-
       - name: Build and Push Docker Image
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
