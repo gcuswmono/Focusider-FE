@@ -25,3 +25,4 @@ export { default as QuizCoverIcon } from './quizCover.svg';
 export { default as ReportCoverIcon } from './reportCover.svg';
 export { default as CalendarIcon } from './calendar.svg';
 export { default as PeopleIcon } from './people.svg';
+export { default as LightIcon } from './light.svg';
