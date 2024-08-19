@@ -1,10 +1,10 @@
 export interface SignUpRequestBody {
   accountId: string;
   password: string;
-  name: string;
-  gender: string;
-  birthday: string;
-  profileImage: string;
+  // name: string;
+  // gender: string;
+  // birthday: string;
+  // profileImage: string;
 }
 
 export interface LoginRequestBody {

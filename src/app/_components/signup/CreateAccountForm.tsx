@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
+import { signUp } from '@/api/auth';
 
 interface SignupPageProps {
   pageNum: string;
@@ -46,7 +47,7 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 회원가입 로직 추가
+    signUp(form);
     router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
   };
 

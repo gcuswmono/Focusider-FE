@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
+import { login } from '@/api/auth';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 로그인 로직 추가
+    login(form);
   };
 
   return (
