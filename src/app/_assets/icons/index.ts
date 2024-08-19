@@ -26,3 +26,6 @@ export { default as ReportCoverIcon } from './reportCover.svg';
 export { default as CalendarIcon } from './calendar.svg';
 export { default as PeopleIcon } from './people.svg';
 export { default as LightIcon } from './light.svg';
+export { default as BookIcon } from './book.svg';
+export { default as StarBorderIcon } from './starBorder.svg';
+export { default as StarIcon } from './star.svg';
