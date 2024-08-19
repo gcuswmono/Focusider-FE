@@ -15,8 +15,8 @@ const InfoSectionModule = ({
   contentClassName = '',
 }: InfoSectionModuleProps) => {
   return (
-    <div className="flex justify-between">
-      <InfoTextAtom text={title} className={`text-3 text-sub-300 ${titleClassName}`} />
+    <div className="flex gap-x-10">
+      <InfoTextAtom text={title} className={`w-28 text-3 text-sub-300 ${titleClassName}`} />
       <InfoTextAtom text={content} className={`text-3${contentClassName}`} />
     </div>
   );
