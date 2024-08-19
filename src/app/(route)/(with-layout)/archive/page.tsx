@@ -33,14 +33,14 @@ const ArticleArchivePage = () => {
       <div className="">
         <SubtitleModule iconSrc={LightIcon} iconAlt="archive" title="아티클 모아보기" />
 
-        <div className="pt-8">
+        <div className="w-[1080px] pt-8">
           <TableContainer>
             <TableHeaderModule>
               <TableHeaderAtom isFirst width="80px">
                 번호
               </TableHeaderAtom>
               <TableHeaderAtom width="140px">분류</TableHeaderAtom>
-              <TableHeaderAtom width="500px">제목</TableHeaderAtom>
+              <TableHeaderAtom>제목</TableHeaderAtom>
               <TableHeaderAtom width="180px">학습일</TableHeaderAtom>
               <TableHeaderAtom isLast width="180px" />
             </TableHeaderModule>
