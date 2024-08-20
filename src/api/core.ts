@@ -6,7 +6,7 @@ import axios, {
   Method,
   AxiosRequestConfig,
 } from 'axios';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'; // Add this line to import the 'Cookies' module
 import { BaseResponse } from './types';
 
 const axiosInstance: AxiosInstance = axios.create({
