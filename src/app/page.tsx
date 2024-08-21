@@ -5,6 +5,7 @@ import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { login } from '@/api/auth';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -23,7 +24,15 @@ const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(form);
+    const response = await login(form);
+    if (response.status === 200) {
+      router.push('/');
+    } else {
+      toast.error(`${response.message}`, {
+        autoClose: 1000,
+        pauseOnHover: false,
+      });
+    }
   };
 
   return (

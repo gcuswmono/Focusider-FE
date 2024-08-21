@@ -8,9 +8,11 @@ export const signUp = async (data: SignUpRequestBody): Promise<void> => {
   });
 };
 
-export const login = async (data: LoginRequestBody): Promise<void> => {
-  await http.post<BaseResponse<void>>({
+export const login = async (data: LoginRequestBody): Promise<BaseResponse<void>> => {
+  const response = await http.post<void>({
     url: '/api/auth/login',
     data,
   });
+
+  return response;
 };
