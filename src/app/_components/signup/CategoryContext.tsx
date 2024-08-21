@@ -2,24 +2,11 @@ import React, { createContext, useContext, useState, useMemo, ReactNode } from '
 
 // 인터페이스 정의
 interface Req {
+  accountId: string | null;
   readingTermType: 'EVERYDAY' | 'ONCE_A_WEEK' | 'SOMETIMES' | 'ALMOST_NONE' | null;
   readingHardType: 'OFTEN' | 'SOMETIMES' | 'ALMOST_NONE' | 'NOTHING' | null;
   categoryTypes: Category[];
 }
-
-export interface AddArray {
-  readingTermType: string | null;
-  readingHardType: string | null;
-  categoryTypes: Category[] | null;
-}
-
-export const transformReqToAddRequestBody = (req: Req): AddArray => {
-  return {
-    readingTermType: req.readingTermType,
-    readingHardType: req.readingHardType,
-    categoryTypes: req.categoryTypes,
-  };
-};
 
 const Categories = [
   'ART',
@@ -49,6 +36,7 @@ interface CategoryContextType {
 // 기본값 설정
 const defaultValue: CategoryContextType = {
   req: {
+    accountId: null,
     readingTermType: null,
     readingHardType: null,
     categoryTypes: [null],

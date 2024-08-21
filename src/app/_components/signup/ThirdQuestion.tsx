@@ -22,16 +22,6 @@ const ThirdQuestionPage = ({
   const router = useRouter();
   const { req, setReq } = useCategory();
 
-  const transformReqToAddRequestBody = (): AddRequestBody => {
-    return {
-      req: {
-        readingTermType: req.readingTermType,
-        readingHardType: req.readingHardType,
-        categoryTypes: req.categoryTypes.length > 0 ? req.categoryTypes : null, // 빈 배열을 null로 변환
-      },
-    };
-  };
-
   const mapLabelToOption = (label: string): Category | null => {
     switch (label) {
       case '예술':
@@ -80,7 +70,7 @@ const ThirdQuestionPage = ({
     if (selectedOptions.length === 3) {
       req.categoryTypes = selectedOptions;
       console.log(req);
-      add(transformReqToAddRequestBody());
+      add(req);
       router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
     }
   };

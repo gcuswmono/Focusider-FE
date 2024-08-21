@@ -1,4 +1,4 @@
-import { AddArray, Category } from '@/app/_components/signup/CategoryContext';
+import { Category } from '@/app/_components/signup/CategoryContext';
 
 export interface SignUpRequestBody {
   accountId: string;
@@ -21,5 +21,8 @@ export interface AuthResponse {
 }
 
 export interface AddRequestBody {
-  req: AddArray;
+  accountId: string | null;
+  readingTermType: string | null;
+  readingHardType: string | null;
+  categoryTypes: Category[] | null;
 }

@@ -9,6 +9,7 @@ import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
 import { signUp } from '@/api/auth';
 import { toast } from 'react-toastify';
 import useSignUp from './SignUpContext';
+import useCategory from './CategoryContext';
 
 interface UserProfileFormProps {
   pageNum: string;
@@ -16,6 +17,7 @@ interface UserProfileFormProps {
 
 const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const router = useRouter();
+  const { req } = useCategory();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [localData, setLocalData] = useState<{
     name: string;
@@ -60,6 +62,7 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
         pauseOnHover: false,
         autoClose: 1000,
       });
+      req.accountId = signUpData.accountId;
       router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
     } catch (signupError) {
       toast.error(`Sign up failed: ${signupError}`, {
