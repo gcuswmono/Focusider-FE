@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/app/_components/common/atoms/ProgressBar';
+import useCategory from '@/app/_components/signup/CategoryContext';
 
 interface FirstQuestionPageProps {
   currentQuestion: number;
