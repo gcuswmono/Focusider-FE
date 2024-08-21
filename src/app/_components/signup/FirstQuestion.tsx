@@ -16,13 +16,36 @@ const FirstQuestionPage = ({
   totalQuestions,
   pageNum,
 }: FirstQuestionPageProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<typeof req.readingTermType | null>(null);
   const router = useRouter();
+  const { req, setReq } = useCategory();
+  const options: (typeof req)['readingTermType'][] = [
+    'EVERYDAY', // 매일 읽어요
+    'ONCE_A_WEEK', // 일주일에 1-2회 정도 읽어요
+    'SOMETIMES', // 아주 가끔 읽어요
+    'ALMOST_NONE', // 거의 읽지 않아요
+  ];
 
   const handleNext = () => {
     if (selectedOption) {
-      // 첫번째 질문 답변 저장
+      req.readingTermType = selectedOption;
+      console.log(req);
       router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
+    }
+  };
+
+  const mapLabelToOption = (label: string) => {
+    switch (label) {
+      case '매일 읽어요.':
+        return 'EVERYDAY';
+      case '일주일에 1-2회 정도 읽어요.':
+        return 'ONCE_A_WEEK';
+      case '아주 가끔 읽어요.':
+        return 'SOMETIMES';
+      case '거의 읽지 않아요.':
+        return 'ALMOST_NONE';
+      default:
+        return null;
     }
   };
 
@@ -39,24 +62,29 @@ const FirstQuestionPage = ({
             '일주일에 1-2회 정도 읽어요.',
             '아주 가끔 읽어요.',
             '거의 읽지 않아요.',
-          ].map((option) => (
-            <button
-              key={option}
-              onClick={() => setSelectedOption(option)}
-              className={`mb-6 w-full rounded border py-7 pl-8 text-left ${
-                selectedOption === option
-                  ? 'border-primary/70 bg-primary/30 text-primary'
-                  : 'bg-[#E1DDF1]'
-              }`}
-            >
-              {option}
-            </button>
-          ))}
+          ].map((option) => {
+            const mappedOption = mapLabelToOption(option);
+            return (
+              <button
+                key={option}
+                onClick={() => setSelectedOption(mappedOption)}
+                className={`mb-6 w-full rounded border py-7 pl-8 text-left ${
+                  selectedOption === mappedOption
+                    ? 'border-primary/70 bg-primary/30 text-primary'
+                    : 'bg-[#E1DDF1]'
+                }`}
+              >
+                {option}
+              </button>
+            );
+          })}
         </div>
         <button
           onClick={handleNext}
           disabled={!selectedOption}
-          className={`h-14 w-full rounded bg-primary p-2 font-semibold text-white ${!selectedOption ? 'cursor-not-allowed' : ''}`}
+          className={`h-14 w-full rounded bg-primary p-2 font-semibold text-white ${
+            !selectedOption ? 'cursor-not-allowed' : ''
+          }`}
         >
           다음
         </button>

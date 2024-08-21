@@ -55,7 +55,7 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
     signUpData.birthday = `${localData.year}-${localData.month}-${localData.day}`;
     signUpData.profileImage = profileImage || '';
     try {
-      await signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
+      signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
       toast.success('회원가입이 완료되었습니다.', {
         pauseOnHover: false,
         autoClose: 1000,

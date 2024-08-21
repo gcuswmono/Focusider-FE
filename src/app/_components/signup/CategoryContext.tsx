@@ -2,10 +2,36 @@ import React, { createContext, useContext, useState, useMemo, ReactNode } from '
 
 // 인터페이스 정의
 interface Req {
-  readingTermType: 'EVERYDAY' | 'WEEKLY' | 'MONTHLY';
-  readingHardType: 'OFTEN' | 'SOMETIMES' | 'RARELY';
-  categoryTypes: string[];
+  readingTermType: 'EVERYDAY' | 'ONCE_A_WEEK' | 'SOMETIMES' | 'ALMOST_NONE' | null;
+  readingHardType: 'OFTEN' | 'SOMETIMES' | 'ALMOST_NONE' | 'NOTHING' | null;
+  categoryTypes: Category[];
 }
+
+export interface AddArray {
+  readingTermType: string | null;
+  readingHardType: string | null;
+  categoryTypes: Category[] | null;
+}
+
+export const transformReqToAddRequestBody = (req: Req): AddArray => {
+  return {
+    readingTermType: req.readingTermType,
+    readingHardType: req.readingHardType,
+    categoryTypes: req.categoryTypes,
+  };
+};
+
+const Categories = [
+  'ART',
+  'SCIENCE',
+  'SOCIETY',
+  'TECHNOLOGY',
+  'HUMANITIES',
+  'AMALGAMATION',
+  null,
+] as const;
+
+export type Category = (typeof Categories)[number];
 
 interface MemberInfo {
   memberId: number;
@@ -23,9 +49,9 @@ interface CategoryContextType {
 // 기본값 설정
 const defaultValue: CategoryContextType = {
   req: {
-    readingTermType: 'EVERYDAY',
-    readingHardType: 'OFTEN',
-    categoryTypes: ['ART'],
+    readingTermType: null,
+    readingHardType: null,
+    categoryTypes: [null],
   },
   memberInfo: {
     memberId: 0,

@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/app/_components/common/atoms/ProgressBar';
+import useCategory from '@/app/_components/signup/CategoryContext';
 
-interface FirstQuestionPageProps {
+interface SecondQuestionPageProps {
   currentQuestion: number;
   totalQuestions: number;
   pageNum: string;
@@ -14,13 +15,30 @@ const SecondQuestionPage = ({
   currentQuestion,
   totalQuestions,
   pageNum,
-}: FirstQuestionPageProps) => {
+}: SecondQuestionPageProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const router = useRouter();
+  const { req, setReq } = useCategory();
+
+  const mapLabelToOption = (label: string) => {
+    switch (label) {
+      case '자주 있어요.':
+        return 'OFTEN';
+      case '가끔 있어요.':
+        return 'SOMETIMES';
+      case '거의 없어요.':
+        return 'ALMOST_NONE';
+      case '전혀 없어요.':
+        return 'NOTHING';
+      default:
+        return null;
+    }
+  };
 
   const handleNext = () => {
     if (selectedOption) {
-      // 두번째 질문 답변 저장
+      req.readingHardType = mapLabelToOption(selectedOption);
+      console.log(req);
       router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
     }
   };
@@ -54,7 +72,9 @@ const SecondQuestionPage = ({
         <button
           onClick={handleNext}
           disabled={!selectedOption}
-          className={`h-14 w-full rounded bg-primary p-2 font-semibold text-white ${!selectedOption ? 'cursor-not-allowed' : ''}`}
+          className={`h-14 w-full rounded bg-primary p-2 font-semibold text-white ${
+            !selectedOption ? 'cursor-not-allowed' : ''
+          }`}
         >
           다음
         </button>
