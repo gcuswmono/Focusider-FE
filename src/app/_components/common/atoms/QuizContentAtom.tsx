@@ -5,7 +5,7 @@ interface QuizContentAtomProps {
 }
 
 const QuizContentAtom = ({ children }: QuizContentAtomProps) => {
-  return <div className="bg-primary-200/50 py-10 pl-12 font-gowun text-h3">{children}</div>;
+  return <div className="my-4 bg-primary-200/50 py-10 pl-12 font-gowun text-h3">{children}</div>;
 };
 
 export default QuizContentAtom;
