@@ -7,7 +7,7 @@ interface UserLoginInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  error: string | null;
+  error?: string | null;
   showDuplicateCheck?: boolean;
   onDuplicateCheckClick?: () => void;
   placeholderRight?: boolean;

@@ -36,9 +36,8 @@ jobs:
         run: |
           echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker rmi $DOCKERHUB_USERNAME/focusider-fe:latest || true
-          docker pull $DOCKERHUB_USERNAME/focusider-fe:latest
+          docker pull $DOCKERHUB_USERNAME/focusider-fe:latest || true
           docker stop focusider-fe || true
           docker rm focusider-fe || true
-      
-          docker run -d --name focusider-fe -p 3000:3000 $DOCKERHUB_USERNAME/focusider-fe:latest
 
+          docker run -d --name focusider-fe -p 3000:3000 $DOCKERHUB_USERNAME/focusider-fe:latest

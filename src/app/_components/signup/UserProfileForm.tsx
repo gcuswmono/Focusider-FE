@@ -6,42 +6,86 @@ import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import Image from 'next/image';
 import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
+import { signUp } from '@/api/auth';
+import { toast } from 'react-toastify';
+import useSignUp from './SignUpContext';
+import useCategory from './CategoryContext';
 
-interface Props {
+interface UserProfileFormProps {
   pageNum: string;
 }
 
-const UserProfileForm = ({ pageNum }: Props) => {
+const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const router = useRouter();
+  const { req } = useCategory();
   const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  const [form, setForm] = useState({
+  const [localData, setLocalData] = useState<{
+    name: string;
+    gender: string;
+    profileImage: string;
+    year: string;
+    month: string;
+    day: string;
+  }>({
     name: '',
+    gender: '',
+    profileImage: '',
     year: '',
     month: '',
     day: '',
-    gender: '',
   });
-  const [error, setError] = useState({
+  const { signUpData } = useSignUp();
+  const [error] = useState<{
+    name: string | null;
+    gender: string | null;
+    profileImage: string | null;
+    year: string | null;
+    month: string | null;
+    day: string | null;
+  }>({
     name: null,
+    gender: null,
+    profileImage: null,
     year: null,
     month: null,
     day: null,
-    gender: null,
   });
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signUpData.name = localData.name;
+    signUpData.gender = localData.gender;
+    signUpData.birthday = `${localData.year}-${localData.month}-${localData.day}`;
+    signUpData.profileImage = profileImage || '';
+    try {
+      signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
+      toast.success('회원가입이 완료되었습니다.', {
+        pauseOnHover: false,
+        autoClose: 1000,
+      });
+      req.accountId = signUpData.accountId;
+      router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
+    } catch (signupError) {
+      toast.error(`Sign up failed: ${signupError}`, {
+        pauseOnHover: false,
+        autoClose: 1000,
+      });
+    }
+  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setLocalData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    console.log(localData);
   };
 
   const onGenderSelect = (gender: string) => {
-    setForm({
-      ...form,
+    setLocalData((prev) => ({
+      ...prev,
       gender,
-    });
+    }));
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,12 +97,6 @@ const UserProfileForm = ({ pageNum }: Props) => {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // 프로필 생성 로직 추가
-    router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
   };
 
   return (
@@ -104,7 +142,7 @@ const UserProfileForm = ({ pageNum }: Props) => {
             <LoginInput
               type="text"
               name="name"
-              value={form.name}
+              value={localData.name}
               onChange={onChange}
               placeholder="이름"
               error={error.name}
@@ -119,7 +157,7 @@ const UserProfileForm = ({ pageNum }: Props) => {
               <LoginInput
                 type="text"
                 name="year"
-                value={form.year}
+                value={localData.year}
                 onChange={onChange}
                 placeholder="년"
                 error={error.year}
@@ -128,7 +166,7 @@ const UserProfileForm = ({ pageNum }: Props) => {
               <LoginInput
                 type="text"
                 name="month"
-                value={form.month}
+                value={localData.month}
                 onChange={onChange}
                 placeholder="월"
                 error={error.month}
@@ -137,7 +175,7 @@ const UserProfileForm = ({ pageNum }: Props) => {
               <LoginInput
                 type="text"
                 name="day"
-                value={form.day}
+                value={localData.day}
                 onChange={onChange}
                 placeholder="일"
                 error={error.day}
@@ -154,14 +192,14 @@ const UserProfileForm = ({ pageNum }: Props) => {
               <button
                 type="button"
                 onClick={() => onGenderSelect('male')}
-                className={`grow rounded-l px-4 py-2 ${form.gender === 'male' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                className={`grow rounded-l px-4 py-2 ${localData.gender === 'male' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
               >
                 남자
               </button>
               <button
                 type="button"
                 onClick={() => onGenderSelect('female')}
-                className={`grow rounded-r px-4 py-2 ${form.gender === 'female' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                className={`grow rounded-r px-4 py-2 ${localData.gender === 'female' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
               >
                 여자
               </button>
