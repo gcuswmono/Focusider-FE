@@ -4,19 +4,31 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
+import { signUp, SignUpRequestBody } from '@/api/auth';
+import useSignUp from './SignUpContext';
 
 interface SignupPageProps {
   pageNum: string;
+  onNext: (data: Partial<SignUpRequestBody>) => void;
 }
 
-const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
-  const router = useRouter();
-  const [form, setForm] = useState({
+const CreateAccountForm = ({ pageNum, onNext }: SignupPageProps) => {
+  const [localData, setLocalData] = useState<{
+    accountId: string;
+    password: string;
+  }>({
     accountId: '',
     password: '',
-    confirmPassword: '',
   });
-  const [error, setError] = useState({
+  const { setSignUpData, signUpData } = useSignUp();
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const router = useRouter();
+
+  const [error, setError] = useState<{
+    accountId: string | null;
+    password: string | null;
+    confirmPassword: string | null;
+  }>({
     accountId: null,
     password: null,
     confirmPassword: null,
@@ -25,19 +37,24 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
   const [passwordMatch, setPasswordMatch] = useState<boolean | null>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === 'confirmPassword') {
+      setConfirmPassword(value);
+    } else {
+      setLocalData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   useEffect(() => {
-    if (form.password && form.confirmPassword) {
-      setPasswordMatch(form.password === form.confirmPassword);
+    if (localData.password && confirmPassword) {
+      setPasswordMatch(localData.password === confirmPassword);
     } else {
       setPasswordMatch(null);
     }
-  }, [form.password, form.confirmPassword]);
+  }, [confirmPassword, localData.password]);
 
   const checkIdAvailability = () => {
     // 아이디 중복확인 로직 추가
@@ -46,7 +63,17 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 회원가입 로직 추가
+    if (!localData.accountId || !localData.password) {
+      setError({
+        ...error,
+        accountId: !localData.accountId ? '아이디를 입력해주세요.' : null,
+        password: !localData.password ? '비밀번호를 입력해주세요.' : null,
+      });
+      return;
+    }
+    signUpData.accountId = localData.accountId;
+    signUpData.password = localData.password;
+    console.log(signUpData);
     router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
   };
 
@@ -67,7 +94,7 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
             <LoginInput
               type="text"
               name="accountId"
-              value={form.accountId}
+              value={localData.accountId || ''}
               onChange={onChange}
               placeholder="아이디"
               error={error.accountId}
@@ -88,7 +115,7 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
             <LoginInput
               type="password"
               name="password"
-              value={form.password}
+              value={localData.password || ''}
               onChange={onChange}
               placeholder="비밀번호"
               error={error.password}
@@ -97,7 +124,7 @@ const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
             <LoginInput
               type="password"
               name="confirmPassword"
-              value={form.confirmPassword}
+              value={confirmPassword}
               onChange={onChange}
               placeholder="비밀번호 재확인"
               error={error.confirmPassword}
