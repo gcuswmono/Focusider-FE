@@ -50,6 +50,9 @@
     "no-useless-catch": "off",
     // 불필요한 catch 못쓰게 하는 기능 끔
     "react/button-has-type": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
     "react/require-default-props": "off",
     "no-useless-concat": "off",
     "react/function-component-definition": [
