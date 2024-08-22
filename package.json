@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
+    "@tanstack/react-query": "^5.52.0",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.4",
     "framer-motion": "^11.3.22",

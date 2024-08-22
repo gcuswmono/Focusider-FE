@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
-import { login } from '@/api/auth';
-import { toast } from 'react-toastify';
+import { useLoginMutation } from '@/app/_api/auth/usePostLoginMutation';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -22,17 +21,20 @@ const LoginPage = () => {
     });
   };
 
+  const loginMutation = useLoginMutation({
+    successCallback: () => {
+      router.push('/home');
+    },
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    errorCallback: (error: Error) => {
+      setError(error.message);
+    },
+  });
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await login(form);
-    if (response.status === 200) {
-      router.push('/');
-    } else {
-      toast.error(`${response.message}`, {
-        autoClose: 1000,
-        pauseOnHover: false,
-      });
-    }
+    setError(null);
+    loginMutation.mutate(form);
   };
 
   return (
@@ -60,7 +62,7 @@ const LoginPage = () => {
                   value={form.password}
                   onChange={onChange}
                   placeholder="비밀번호"
-                  error={error !== '사용자를 찾을 수 없습니다.' ? error : null}
+                  error={error && error !== '사용자를 찾을 수 없습니다.' ? error : null}
                 />
                 <ButtonAtom
                   buttonStyle="dark"
@@ -69,7 +71,7 @@ const LoginPage = () => {
                   width="grow"
                   height="56px"
                   rounded="rounded"
-                  onClick={() => handleLogin}
+                  onClick={() => handleLogin} // 클릭 시 handleLogin 함수 호출
                 />
               </div>
             </form>
