@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
-import { useLoginMutation } from '@/app/_api/auth/usePostLoginMutation';
+import { login } from '@/api/auth';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -21,22 +22,18 @@ const LoginPage = () => {
     });
   };
 
-  const loginMutation = useLoginMutation({
-    successCallback: () => {
-      router.push('/home');
-    },
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    errorCallback: (error: Error) => {
-      setError(error.message);
-    },
-  });
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
-    loginMutation.mutate(form);
+    const response = await login(form);
+    if (response.status === 200) {
+      router.push('/home');
+    } else {
+      toast.error(`${response.message}`, {
+        autoClose: 1000,
+        pauseOnHover: false,
+      });
+    }
   };
-
   return (
     <section className="flex h-dvh">
       {/* TODO : 왼쪽 절반 영역에 배너 추가 */}

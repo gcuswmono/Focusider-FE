@@ -4,6 +4,7 @@ import { useState } from 'react';
 import QuizHeaderModule from '@/app/_components/common/modules/QuizHeaderModule';
 import QuizContentAtom from '@/app/_components/common/atoms/QuizContentAtom';
 import QuizOptionModule from '@/app/_components/common/modules/QuizOptionModule';
+import { useGetQuizQuery } from '@/app/_api/quiz/useGetQuizQuery';
 
 const quiz = {
   quizId: 1,
@@ -20,6 +21,9 @@ const quiz = {
 const QuizPage = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
+  const { data, isLoading, isError } = useGetQuizQuery();
+
+  console.log(data);
   const handleOptionClick = (id: number) => {
     setSelectedOption(id);
     console.log(`선택된 옵션 ID: ${id}`);
