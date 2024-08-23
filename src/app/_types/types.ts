@@ -9,5 +9,5 @@ export const quizInfoSchema = z.object({
   quizId: z.number(),
   title: z.string(),
   content: z.string(),
-  choiceContent: choiceContentSchema,
+  choiceContent: choiceContentSchema.array(),
 });
