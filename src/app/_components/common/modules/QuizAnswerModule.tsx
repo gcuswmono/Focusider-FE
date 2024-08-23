@@ -10,7 +10,7 @@ interface QuizAnswerModuleProps {
 const QuizAnswerModule = ({ isCorrect }: QuizAnswerModuleProps) => {
   return (
     <div
-      className={`flex items-center space-x-5 rounded-lg py-3 pl-4 ${
+      className={`flex w-full items-center space-x-5 rounded-lg py-3 pl-4 ${
         isCorrect ? 'bg-positive/20' : 'bg-negative/20'
       }`}
     >
