@@ -11,6 +11,9 @@ import PaginationModule from '@/app/_components/common/modules/PaginationModule'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useGetWrongQuizQuery } from '@/app/_api/quiz/useGetWrongQuizQuery';
+import { format } from 'date-fns';
+import { KeywordType, KeywordTypeConverter } from '@/app/_types/converter';
 
 const getDifficultyStars = (level: number) => {
   const filledStars = level;
@@ -32,48 +35,28 @@ const QuizReviewPage = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const data = [
-    {
-      id: 1,
-      level: 0,
-      category: '과학',
-      title: '속담, 어휘',
-      studyDate: '2024.07.08',
-      reviewDate: '2024.08.01',
+  const {
+    data: reviewData,
+    isLoading,
+    isError,
+  } = useGetWrongQuizQuery({
+    pageParam: {
+      page: currentPage,
+      size: 5,
     },
-    {
-      id: 2,
-      level: 1,
-      category: '기술',
-      title: '속담, 어휘',
-      studyDate: '2024.07.09',
-      reviewDate: '2024.08.05',
-    },
-    {
-      id: 3,
-      level: 2,
-      category: '문학',
-      title: '속담, 어휘',
-      studyDate: '2024.07.10',
-      reviewDate: '2024.08.10',
-    },
-    {
-      id: 4,
-      level: 3,
-      category: '문학',
-      title: '속담, 어휘',
-      studyDate: '2024.07.11',
-      reviewDate: '2024.08.15',
-    },
-    {
-      id: 5,
-      level: 1,
-      category: '문학',
-      title: '속담, 어휘',
-      studyDate: '2024.07.12',
-      reviewDate: '2024.08.20',
-    },
-  ];
+  });
+
+  // 로딩 중일 때 처리
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  // 에러가 발생했을 때 처리
+  if (isError) {
+    return <div>에러가 발생했습니다.</div>;
+  }
+
+  const data = reviewData?.quizInfos || [];
 
   return (
     <section className="flex h-full w-full items-center justify-center">
@@ -93,17 +76,32 @@ const QuizReviewPage = () => {
               <TableHeaderAtom isLast width="180px" />
             </TableHeaderModule>
             <tbody>
-              {data.map((item) => (
-                <TableRowModule key={item.id}>
-                  <TableRowAtom isFirst>{item.id}</TableRowAtom>
+              {data.map((item, index) => (
+                <TableRowModule key={item.quizId}>
+                  <TableRowAtom isFirst>{index + 1}</TableRowAtom>
                   <TableRowAtom>{getDifficultyStars(item.level)}</TableRowAtom>
-                  <TableRowAtom>{item.title}</TableRowAtom>
-                  <TableRowAtom>{item.studyDate}</TableRowAtom>
-                  <TableRowAtom>{item.reviewDate}</TableRowAtom>
+                  <TableRowAtom>
+                    {item.keywordInfos.map((keyword) => (
+                      <p
+                        key={keyword.keywordType}
+                        className="mr-2 inline-block rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
+                      >
+                        {KeywordTypeConverter[keyword.keywordType as KeywordType] ||
+                          keyword.keywordType}
+                      </p>
+                    ))}
+                  </TableRowAtom>
+
+                  <TableRowAtom>
+                    {item.createdAt ? format(new Date(item.createdAt), 'yyyy.MM.dd') : ''}
+                  </TableRowAtom>
+                  <TableRowAtom>
+                    {item.updatedAt ? format(new Date(item.updatedAt), 'yyyy.MM.dd') : ''}
+                  </TableRowAtom>
                   <TableRowAtom isLast>
                     <button
                       className="rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
-                      onClick={() => router.push(`/review/${item.id}`)}
+                      onClick={() => router.push(`/review/${item.quizId}`)}
                     >
                       다시 풀기
                     </button>
@@ -115,7 +113,7 @@ const QuizReviewPage = () => {
         </div>
         <div className="flex justify-center py-5">
           <PaginationModule
-            totalPages={5}
+            totalPages={reviewData?.pageInfo.totalPages || 1}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
