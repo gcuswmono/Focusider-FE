@@ -14,12 +14,18 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.52.0
         version: 5.52.0(react@18.3.1)
+      '@types/canvas-confetti':
+        specifier: ^1.6.4
+        version: 1.6.4
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
       axios:
         specifier: ^1.7.4
         version: 1.7.4
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
       framer-motion:
         specifier: ^11.3.22
         version: 11.3.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1329,6 +1335,9 @@ packages:
     peerDependencies:
       react: ^18.0.0
 
+  '@types/canvas-confetti@1.6.4':
+    resolution: {integrity: sha512-fNyZ/Fdw/Y92X0vv7B+BD6ysHL4xVU5dJcgzgxLdGbn8O3PezZNIJpml44lKM0nsGur+o/6+NZbZeNTt00U1uA==}
+
   '@types/js-cookie@3.0.6':
     resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
 
@@ -1581,6 +1590,9 @@ packages:
 
   caniuse-lite@1.0.30001650:
     resolution: {integrity: sha512-fgEc7hP/LB7iicdXHUI9VsBsMZmUmlVJeQP2qqQW+3lkqVhbmjEU8zp+h5stWeilX+G7uXuIUIIlWlDw9jdt8g==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -5154,6 +5166,8 @@ snapshots:
       '@tanstack/query-core': 5.52.0
       react: 18.3.1
 
+  '@types/canvas-confetti@1.6.4': {}
+
   '@types/js-cookie@3.0.6': {}
 
   '@types/json5@0.0.29': {}
@@ -5463,6 +5477,8 @@ snapshots:
   camelcase-css@2.0.1: {}
 
   caniuse-lite@1.0.30001650: {}
+
+  canvas-confetti@1.9.3: {}
 
   chalk@4.1.2:
     dependencies:
