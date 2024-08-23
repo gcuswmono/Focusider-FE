@@ -18,7 +18,7 @@ interface QuizContainerProps {
 
 const QuizInfoContainer = ({ pageNum }: QuizContainerProps) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [timeSpent, setTimeSpent] = useState<number>(0); // 퀴즈 푼 시간 기록
+  const [timeSpent, setTimeSpent] = useState<number>(0);
   const [quizResult, setQuizResult] = useState<null | {
     correctContent: string;
     chooseContent: string;
