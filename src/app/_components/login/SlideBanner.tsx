@@ -12,7 +12,10 @@ const SlideBanner = () => {
   return (
     <main className="flex h-full w-full flex-col items-center justify-center">
       <div className="group flex w-fit overflow-hidden">
-        <div className="animate-infiniteSlide group-hover flex gap-6 pr-6">
+        <div
+          // prettier-ignore
+          className="animate-infiniteSlide flex gap-6 pr-6"
+        >
           {[...images, ...images].map((image) => (
             <Image
               key={image.id}
