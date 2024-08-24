@@ -31,8 +31,9 @@ const ModalModule = ({ iconSrc, iconAlt, title, subtitle, buttonProps }: ModalMo
         <ModalTitleAtom title={title} />
         {subtitle && <ModalSubtitleAtom subtitle={subtitle} />}
         {buttonProps && (
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-1.5 py-3.5">
             <ButtonAtom
+              rounded="rounded"
               buttonStyle={buttonProps.primary.buttonStyle}
               text={buttonProps.primary.text}
               onClick={buttonProps.primary.onClick}
@@ -41,6 +42,7 @@ const ModalModule = ({ iconSrc, iconAlt, title, subtitle, buttonProps }: ModalMo
             />
             {buttonProps.secondary && (
               <ButtonAtom
+                rounded="rounded"
                 buttonStyle={buttonProps.secondary.buttonStyle}
                 text={buttonProps.secondary.text}
                 onClick={buttonProps.secondary.onClick}

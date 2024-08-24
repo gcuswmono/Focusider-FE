@@ -34,3 +34,4 @@ export { default as ClockIcon } from './clock.svg';
 export { default as NextArrowIcon } from './next.svg';
 export { default as ClapIcon } from './clap.svg';
 export { default as CloseIcon } from './close.svg';
+export { default as WarningIcon } from './warning.svg';

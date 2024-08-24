@@ -5,7 +5,7 @@ interface ModalTitleAtomProps {
 }
 
 const ModalSubtitleAtom = ({ subtitle }: ModalTitleAtomProps) => {
-  return <p className="w-full text-center text-4 text-sub-300">{subtitle}</p>;
+  return <p className="w-full whitespace-pre-line text-center text-4 text-sub-300">{subtitle}</p>;
 };
 
 export default ModalSubtitleAtom;

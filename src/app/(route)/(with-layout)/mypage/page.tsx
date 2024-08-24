@@ -1,7 +1,13 @@
 'use client';
 
 import SubtitleModule from '@/app/_components/common/modules/SubtitleModule';
-import { AddProfileIcon, CloseIcon, EmptyProfileIcon, MypageIcon } from '@/app/_assets/icons';
+import {
+  AddProfileIcon,
+  CloseIcon,
+  EmptyProfileIcon,
+  MypageIcon,
+  WarningIcon,
+} from '@/app/_assets/icons';
 import Image from 'next/image';
 import InfoSectionModule from '@/app/_components/common/modules/InfoSectionModule';
 import { useGetMemberInfoQuery } from '@/app/_api/member/useGetMemberInfoQuery';
@@ -11,10 +17,12 @@ import { format } from 'date-fns';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { usePostFileMutation } from '@/app/_api/member/usePostFileMutation';
 import { usePatchMemberInfoMutation } from '@/app/_api/member/usePatchMemberInfoMutation';
+import ModalModule from '@/app/_components/common/modules/ModalModule'; // 탈퇴 모달 임포트
 
 const MyPage = () => {
   const { data, isLoading, isError } = useGetMemberInfoQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 탈퇴 모달 상태 추가
   const [editedName, setEditedName] = useState('');
   const [editedProfileImageUrl, setEditedProfileImageUrl] = useState('');
 
@@ -72,6 +80,16 @@ const MyPage = () => {
     });
   };
 
+  const handleDeleteAccount = () => {
+    console.log('회원 탈퇴 처리');
+    setIsDeleteModalOpen(false);
+  };
+
+  const openDeleteModal = () => {
+    setIsModalOpen(false);
+    setIsDeleteModalOpen(true);
+  };
+
   return (
     <section className="flex h-full items-center justify-center">
       <div className="w-[1080px]">
@@ -113,9 +131,10 @@ const MyPage = () => {
         </div>
       </div>
 
+      {/* 회원 수정 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative h-[400px] w-[500px] rounded-lg bg-primary-100 p-6">
+          <div className="relative h-[400px] w-[500px] rounded-2xl bg-primary-100 p-6">
             <button className="absolute right-6 top-6" onClick={() => setIsModalOpen(false)}>
               <Image src={CloseIcon} alt="Close" />
             </button>
@@ -158,7 +177,7 @@ const MyPage = () => {
                   type="button"
                   width="110px"
                   rounded="rounded"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={openDeleteModal}
                 />
                 <ButtonAtom
                   buttonStyle="dark"
@@ -172,6 +191,31 @@ const MyPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <ModalModule
+          iconSrc={WarningIcon}
+          iconAlt="탈퇴 아이콘"
+          title="정말로 탈퇴하시겠습니까?"
+          subtitle={'탈퇴 시 모든 정보가 삭제됩니다.\n삭제된 정보는 복구할 수 없습니다.'}
+          buttonProps={{
+            primary: {
+              buttonStyle: 'dark',
+              text: '탈퇴',
+              onClick: handleDeleteAccount,
+              type: 'button',
+              width: 'fixed',
+            },
+            secondary: {
+              buttonStyle: 'light',
+              text: '취소',
+              onClick: () => setIsDeleteModalOpen(false),
+              type: 'button',
+              width: 'fixed',
+            },
+          }}
+        />
       )}
     </section>
   );
