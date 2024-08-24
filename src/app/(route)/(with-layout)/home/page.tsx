@@ -61,7 +61,7 @@ export default function Login() {
               subtitleColor="text-stroke-100"
               infoModuleSrc={PeopleIcon}
               infoModuleAlt="icon"
-              infoModuleText="인문"
+              infoModuleText={data.categoryType}
             >
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
