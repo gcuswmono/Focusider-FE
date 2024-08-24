@@ -85,6 +85,7 @@ const MyPage = () => {
                 alt="profileDefault"
                 width={100}
                 height={100}
+                className="h-28 w-28 rounded-full object-cover"
               />
               <button className="absolute -bottom-2 -right-2" type="button">
                 <Image src={AddProfileIcon} alt="profileEdit" />
@@ -92,7 +93,7 @@ const MyPage = () => {
             </div>
           </div>
 
-          <div className="flex w-[330px] flex-col gap-y-6 pl-16 pt-8">
+          <div className="flex w-[330px] flex-col gap-y-6 pl-16 pt-4">
             <InfoSectionModule title="이름" content={data.name} />
             <InfoSectionModule title="아이디" content={data.accountId} />
             <InfoSectionModule title="생년월일" content={formattedBirthDay} />
@@ -128,7 +129,7 @@ const MyPage = () => {
                     alt="profileDefault"
                     width={100}
                     height={100}
-                    className="rounded-full object-cover"
+                    className="h-[100px] w-[100px] rounded-full object-cover"
                   />
                   <input
                     type="file"
