@@ -6,16 +6,24 @@ import Image from 'next/image';
 import InfoSectionModule from '@/app/_components/common/modules/InfoSectionModule';
 import { useGetMemberInfoQuery } from '@/app/_api/member/useGetMemberInfoQuery';
 import Loading from '@/app/_components/common/atoms/Loading';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { usePostFileMutation } from '@/app/_api/member/usePostFileMutation';
+import { usePatchMemberInfoMutation } from '@/app/_api/member/usePatchMemberInfoMutation';
 
 const MyPage = () => {
   const { data, isLoading, isError } = useGetMemberInfoQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedName, setEditedName] = useState('김가현');
+  const [editedName, setEditedName] = useState('');
   const [editedProfileImageUrl, setEditedProfileImageUrl] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setEditedName(data.name);
+      setEditedProfileImageUrl(data.profileImageUrl || EmptyProfileIcon);
+    }
+  }, [data]);
 
   const successCallback = (imageUrl: string) => {
     setEditedProfileImageUrl(imageUrl);
@@ -28,6 +36,15 @@ const MyPage = () => {
   const { mutate: uploadFile } = usePostFileMutation({
     successCallback,
     errorCallback,
+  });
+
+  const { mutate: patchMemberInfo } = usePatchMemberInfoMutation({
+    successCallback: () => {
+      setIsModalOpen(false);
+    },
+    errorCallback: (error) => {
+      console.error('Failed to update member info:', error);
+    },
   });
 
   if (isLoading) return <Loading />;
@@ -48,6 +65,13 @@ const MyPage = () => {
     }
   };
 
+  const saveProfileChanges = () => {
+    patchMemberInfo({
+      name: editedName,
+      profileImageUrl: editedProfileImageUrl,
+    });
+  };
+
   return (
     <section className="flex h-full items-center justify-center">
       <div className="w-[1080px]">
@@ -57,7 +81,7 @@ const MyPage = () => {
           <div className="w-full py-10 pl-16">
             <div className="relative inline-block">
               <Image
-                src={editedProfileImageUrl || data.profileImageUrl || EmptyProfileIcon}
+                src={editedProfileImageUrl || EmptyProfileIcon}
                 alt="profileDefault"
                 width={100}
                 height={100}
@@ -69,7 +93,7 @@ const MyPage = () => {
           </div>
 
           <div className="flex w-[330px] flex-col gap-y-6 pl-16 pt-8">
-            <InfoSectionModule title="이름" content={editedName} />
+            <InfoSectionModule title="이름" content={data.name} />
             <InfoSectionModule title="아이디" content={data.accountId} />
             <InfoSectionModule title="생년월일" content={formattedBirthDay} />
             <InfoSectionModule title="성별" content={formattedGender} />
@@ -100,7 +124,7 @@ const MyPage = () => {
               <div className="flex w-full justify-center">
                 <div className="relative inline-block">
                   <Image
-                    src={editedProfileImageUrl || data.profileImageUrl || EmptyProfileIcon}
+                    src={editedProfileImageUrl || EmptyProfileIcon}
                     alt="profileDefault"
                     width={100}
                     height={100}
@@ -142,7 +166,7 @@ const MyPage = () => {
                   type="button"
                   width="96px"
                   rounded="rounded"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={saveProfileChanges}
                 />
               </div>
             </div>
