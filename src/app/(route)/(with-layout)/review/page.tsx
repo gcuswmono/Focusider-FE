@@ -47,12 +47,10 @@ const QuizReviewPage = () => {
     },
   });
 
-  // 로딩 중일 때 처리
   if (isLoading) {
     return <Loading />;
   }
 
-  // 에러가 발생했을 때 처리
   if (isError) {
     return <div>에러가 발생했습니다.</div>;
   }
@@ -102,7 +100,9 @@ const QuizReviewPage = () => {
                   <TableRowAtom isLast>
                     <button
                       className="rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
-                      onClick={() => router.push(`/review/${item.quizId}`)}
+                      onClick={() =>
+                        router.push(`/review/${item.quizId}?quizAttemptId=${item.quizAttemptId}`)
+                      }
                     >
                       다시 풀기
                     </button>

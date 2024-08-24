@@ -18,7 +18,7 @@ export const usePostQuizMutation = ({
   successCallback,
   errorCallback,
 }: {
-  successCallback?: (data: BaseResponse<PostQuizData>) => void; // data 인자를 받도록 수정
+  successCallback?: (data: BaseResponse<PostQuizData>) => void;
   errorCallback?: (error: Error) => void;
 }) => {
   const queryClient = useQueryClient();
@@ -26,7 +26,7 @@ export const usePostQuizMutation = ({
   return useMutation({
     mutationFn: async (request: PostQuizRequest) => {
       const response = await api.post<BaseResponse<PostQuizData>>('/api/quiz', request);
-      return response.data; // response에서 data만 반환
+      return response.data;
     },
     onSuccess: (data: BaseResponse<PostQuizData>) => {
       // data를 successCallback에 전달
