@@ -6,15 +6,29 @@ import Image from 'next/image';
 import InfoSectionModule from '@/app/_components/common/modules/InfoSectionModule';
 import { useGetMemberInfoQuery } from '@/app/_api/member/useGetMemberInfoQuery';
 import Loading from '@/app/_components/common/atoms/Loading';
-import React, { useState } from 'react'; // 상태 관리 추가
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
+import { usePostFileMutation } from '@/app/_api/member/usePostFileMutation';
 
 const MyPage = () => {
   const { data, isLoading, isError } = useGetMemberInfoQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedName, setEditedName] = useState('김가현');
-  const [editedProfileImageUrl, setEditedProfileImageUrl] = useState(null);
+  const [editedProfileImageUrl, setEditedProfileImageUrl] = useState('');
+
+  const successCallback = (imageUrl: string) => {
+    setEditedProfileImageUrl(imageUrl);
+  };
+
+  const errorCallback = (error: Error) => {
+    console.error('프로필 이미지 업로드 실패:', error);
+  };
+
+  const { mutate: uploadFile } = usePostFileMutation({
+    successCallback,
+    errorCallback,
+  });
 
   if (isLoading) return <Loading />;
   if (isError || !data) return <p>error</p>;
@@ -27,11 +41,10 @@ const MyPage = () => {
     setEditedName(e.target.value);
   };
 
-  // 프로필 이미지 수정 처리 (간단히 파일 업로드 로직 추가 가능)
-  const handleProfileImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      // setEditedProfileImageUrl(URL.createObjectURL(file)); // 업로드된 이미지 URL 설정
+      uploadFile({ file });
     }
   };
 
@@ -91,6 +104,13 @@ const MyPage = () => {
                     alt="profileDefault"
                     width={100}
                     height={100}
+                    className="rounded-full object-cover"
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfileImageChange}
+                    className="absolute inset-0 cursor-pointer opacity-0"
                   />
                   <button className="absolute -bottom-2 -right-2" type="button">
                     <Image src={AddProfileIcon} alt="profileEdit" />
