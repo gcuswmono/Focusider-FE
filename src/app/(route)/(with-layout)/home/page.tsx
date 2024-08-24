@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import CardContainer from '@/app/_components/common/containers/CardContainer';
 import ArticleCoverModule from '@/app/_components/common/modules/ArticleCoverModule';
+import { ArticleKeywordType, ArticleKeywordTypeConverter } from '@/app/_types/converter';
+
 import Image from 'next/image';
 import {
   CalendarIcon,
@@ -61,7 +63,7 @@ export default function Login() {
               subtitleColor="text-stroke-100"
               infoModuleSrc={PeopleIcon}
               infoModuleAlt="icon"
-              infoModuleText={data.categoryType}
+              infoModuleText={ArticleKeywordTypeConverter[data.categoryType as ArticleKeywordType]}
             >
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
