@@ -30,3 +30,6 @@ export { default as BookIcon } from './book.svg';
 export { default as StarBorderIcon } from './starBorder.svg';
 export { default as StarIcon } from './star.svg';
 export { default as MypageIcon } from './mypage.svg';
+export { default as ClockIcon } from './clock.svg';
+export { default as NextArrowIcon } from './next.svg';
+export { default as ClapIcon } from './clap.svg';

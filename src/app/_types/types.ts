@@ -1,0 +1,44 @@
+import { z } from 'zod';
+
+export const choiceContentSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+});
+
+export const quizInfoSchema = z.object({
+  quizId: z.number(),
+  title: z.string(),
+  content: z.string(),
+  choiceContent: choiceContentSchema.array(),
+});
+
+export const pageInfoSchema = z.object({
+  pageNum: z.number(),
+  pageSize: z.number(),
+  totalElements: z.number(),
+  totalPages: z.number(),
+});
+
+export const keywordInfoSchema = z.object({
+  keywordType: z.string(),
+});
+
+export const quizInfoListSchema = z.object({
+  quizId: z.number(),
+  quizAttemptId: z.number(),
+  level: z.number(),
+  keywordInfos: keywordInfoSchema.array(),
+  createdAt: z.string().nullable(),
+  updatedAt: z.string().nullable(),
+});
+
+export const quizListSchema = z.object({
+  quizInfos: quizInfoListSchema.array(),
+  pageInfo: pageInfoSchema,
+});
+
+export const quizAnswerSchema = z.object({
+  correctContent: z.string(),
+  chooseAnswer: z.string(),
+  commentaryContent: z.string(),
+});

@@ -74,7 +74,7 @@ export default function Login() {
             </CardContainer>
 
             <CardContainer
-              onClick={() => router.push('/quiz')}
+              onClick={() => router.push('/quiz/1')}
               size="small"
               title="오늘의 단어 퀴즈"
               subtitle={'일주일 간의 성장을 확인하고\n다음 단계를 준비하세요.'}
