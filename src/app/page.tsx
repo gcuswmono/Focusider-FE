@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { login } from '@/api/auth';
 import { toast } from 'react-toastify';
+import SlideBanner from '@/app/_components/login/SlideBanner';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -36,8 +37,9 @@ const LoginPage = () => {
   };
   return (
     <section className="flex h-dvh">
-      {/* TODO : 왼쪽 절반 영역에 배너 추가 */}
-      <div className="w-1/2" />
+      <div className="w-1/2">
+        <SlideBanner />
+      </div>
 
       <div className="flex w-1/2 flex-col items-center justify-center rounded-l-3xl bg-primary-100">
         <div className="flex w-[400px] flex-col items-center gap-y-20">
