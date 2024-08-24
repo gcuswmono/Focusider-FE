@@ -17,12 +17,15 @@ import { format } from 'date-fns';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { usePostFileMutation } from '@/app/_api/member/usePostFileMutation';
 import { usePatchMemberInfoMutation } from '@/app/_api/member/usePatchMemberInfoMutation';
-import ModalModule from '@/app/_components/common/modules/ModalModule'; // 탈퇴 모달 임포트
+import { useDeleteMemberMutation } from '@/app/_api/member/useDeleteMemberMutation';
+import ModalModule from '@/app/_components/common/modules/ModalModule';
+import { useRouter } from 'next/navigation';
 
 const MyPage = () => {
+  const router = useRouter();
   const { data, isLoading, isError } = useGetMemberInfoQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 탈퇴 모달 상태 추가
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editedName, setEditedName] = useState('');
   const [editedProfileImageUrl, setEditedProfileImageUrl] = useState('');
 
@@ -55,6 +58,17 @@ const MyPage = () => {
     },
   });
 
+  const { mutate: deleteMember } = useDeleteMemberMutation({
+    successCallback: () => {
+      alert('회원님의 계정이 삭제되었습니다.');
+      setIsDeleteModalOpen(false);
+      router.push('/');
+    },
+    errorCallback: (error) => {
+      console.error('회원 탈퇴 실패:', error);
+    },
+  });
+
   if (isLoading) return <Loading />;
   if (isError || !data) return <p>error</p>;
 
@@ -78,11 +92,6 @@ const MyPage = () => {
       name: editedName,
       profileImageUrl: editedProfileImageUrl,
     });
-  };
-
-  const handleDeleteAccount = () => {
-    console.log('회원 탈퇴 처리');
-    setIsDeleteModalOpen(false);
   };
 
   const openDeleteModal = () => {
@@ -131,7 +140,6 @@ const MyPage = () => {
         </div>
       </div>
 
-      {/* 회원 수정 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative h-[400px] w-[500px] rounded-2xl bg-primary-100 p-6">
@@ -196,14 +204,14 @@ const MyPage = () => {
       {isDeleteModalOpen && (
         <ModalModule
           iconSrc={WarningIcon}
-          iconAlt="탈퇴 아이콘"
+          iconAlt="delete"
           title="정말로 탈퇴하시겠습니까?"
           subtitle={'탈퇴 시 모든 정보가 삭제됩니다.\n삭제된 정보는 복구할 수 없습니다.'}
           buttonProps={{
             primary: {
               buttonStyle: 'dark',
               text: '탈퇴',
-              onClick: handleDeleteAccount,
+              onClick: () => deleteMember(),
               type: 'button',
               width: 'fixed',
             },
