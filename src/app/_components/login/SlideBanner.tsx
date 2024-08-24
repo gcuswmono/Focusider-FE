@@ -25,9 +25,9 @@ const SlideBanner = () => {
           ))}
         </div>
       </div>
-      <p className="pt-16 text-center text-2 font-semibold text-sub-300/70">
+      <p className="pt-20 text-center text-1 text-sub-300/70">
         읽고, 대화하고, 배우는 즐거운 여정이 <br />
-        바로 여기서 시작됩니다!
+        바로 여기서 시작됩니다 🎉
       </p>
     </main>
   );
