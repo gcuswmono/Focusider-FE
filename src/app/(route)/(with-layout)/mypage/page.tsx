@@ -77,7 +77,6 @@ const MyPage = () => {
       <div className="w-[1080px]">
         <div className="">
           <SubtitleModule iconSrc={MypageIcon} iconAlt="archive" title="마이페이지" />
-
           <div className="w-full py-10 pl-16">
             <div className="relative inline-block">
               <Image
@@ -155,9 +154,9 @@ const MyPage = () => {
               <div className="flex gap-x-1.5">
                 <ButtonAtom
                   buttonStyle="light"
-                  text="취소"
+                  text="회원 탈퇴"
                   type="button"
-                  width="96px"
+                  width="110px"
                   rounded="rounded"
                   onClick={() => setIsModalOpen(false)}
                 />
@@ -165,7 +164,7 @@ const MyPage = () => {
                   buttonStyle="dark"
                   text="저장"
                   type="button"
-                  width="96px"
+                  width="110px"
                   rounded="rounded"
                   onClick={saveProfileChanges}
                 />
