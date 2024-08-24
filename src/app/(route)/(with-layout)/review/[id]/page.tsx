@@ -1,20 +1,22 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import QuizHeaderModule from '@/app/_components/common/modules/QuizHeaderModule';
 import QuizContentAtom from '@/app/_components/common/atoms/QuizContentAtom';
 import QuizOptionModule from '@/app/_components/common/modules/QuizOptionModule';
 import QuizAnswerModule from '@/app/_components/common/modules/QuizAnswerModule';
 import { useGetQuizDetailQuery } from '@/app/_api/quiz/useGetQuizDetailQuery';
-import { usePostQuizMutation } from '@/app/_api/quiz/usePostQuizMutation';
 import Image from 'next/image';
 import { ClockIcon } from '@/app/_assets/icons';
 import HeaderNextModule from '@/app/_components/common/modules/HeaderNextModule';
 import Loading from '@/app/_components/common/atoms/Loading';
+import { usePatchQuizMutation } from '@/app/_api/quiz/usePatchQuizMutation';
 
 const ReviewDetailPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const attemptId = searchParams.get('quizAttemptId');
 
   const quizId = typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : null;
 
@@ -28,7 +30,7 @@ const ReviewDetailPage = () => {
 
   const { data, isLoading, isError, refetch } = useGetQuizDetailQuery(Number(quizId));
 
-  const { mutate: postQuiz } = usePostQuizMutation({
+  const { mutate: patchQuiz } = usePatchQuizMutation({
     successCallback: (response) => {
       setQuizResult(response.data);
       refetch();
@@ -52,8 +54,8 @@ const ReviewDetailPage = () => {
 
   const handleNextButtonClick = () => {
     if (selectedOption !== null && data) {
-      postQuiz({
-        quizId: data.quizId,
+      patchQuiz({
+        quizAttemptId: Number(attemptId),
         choiceId: selectedOption,
         time: timeSpent,
       });
@@ -110,7 +112,7 @@ const ReviewDetailPage = () => {
         </div>
       ) : (
         <>
-          <HeaderNextModule onClick={() => router.push('/review')} />
+          <HeaderNextModule onClick={() => router.replace('/review')} />
           <section className="flex h-full w-full items-center justify-center">
             <div className="h-full w-full rounded-lg p-10">
               <QuizAnswerModule
