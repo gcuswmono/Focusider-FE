@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { ClockIcon } from '@/app/_assets/icons';
 import HeaderNextModule from '@/app/_components/common/modules/HeaderNextModule';
 import { useRouter } from 'next/navigation';
+import Loading from '@/app/_components/common/atoms/Loading';
 
 interface QuizContainerProps {
   pageNum: string;
@@ -77,7 +78,7 @@ const QuizInfoContainer = ({ pageNum }: QuizContainerProps) => {
           <HeaderNextModule onClick={handleNextButtonClick} />
           {!data ? (
             isLoading ? (
-              <p>loading ..</p>
+              <Loading />
             ) : (
               <p>error</p>
             )

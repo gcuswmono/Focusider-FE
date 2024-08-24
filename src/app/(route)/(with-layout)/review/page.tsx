@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { useGetWrongQuizQuery } from '@/app/_api/quiz/useGetWrongQuizQuery';
 import { format } from 'date-fns';
 import { KeywordType, KeywordTypeConverter } from '@/app/_types/converter';
+import Loading from '@/app/_components/common/atoms/Loading';
 
 const getDifficultyStars = (level: number) => {
   const filledStars = level;
@@ -48,7 +49,7 @@ const QuizReviewPage = () => {
 
   // 로딩 중일 때 처리
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   // 에러가 발생했을 때 처리
