@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardContainer from '@/app/_components/common/containers/CardContainer';
 import ArticleCoverModule from '@/app/_components/common/modules/ArticleCoverModule';
 import Image from 'next/image';
@@ -13,6 +13,9 @@ import {
 } from '@/app/_assets/icons';
 import InfoModule from '@/app/_components/common/modules/InfoModule';
 import { useRouter } from 'next/navigation';
+import { useGetArticleQuery } from '@/app/_api/article/useGetArticleQuery';
+import Loading from '@/app/_components/common/atoms/Loading';
+import { useGetMemberInfoQuery } from '@/app/_api/member/useGetMemberInfoQuery';
 
 export default function Login() {
   const router = useRouter();
@@ -24,13 +27,25 @@ export default function Login() {
     setCurrentDate(formattedDate);
   }, []);
 
+  const { data, isLoading, isError } = useGetArticleQuery();
+
+  const { data: MemberInfo } = useGetMemberInfoQuery();
+  if (isLoading) return <Loading />;
+  if (isError || !data) return <p>error</p>;
+
   return (
     <section className="flex h-full w-full items-center justify-center bg-primary-100">
       <div className="flex flex-col items-center justify-center gap-y-6 px-8">
         <div className="flex w-full justify-between">
           <div className="flex h-10 items-center gap-x-3">
-            <Image src={EmptyProfileIcon} className="h-12 w-12 rounded-full" alt="profile" />
-            <p className="text-h4 font-semibold">반가워요 ! 김가현님</p>
+            <Image
+              src={MemberInfo?.profileImageUrl || EmptyProfileIcon}
+              className="h-12 w-12 rounded-full object-cover"
+              width={48}
+              height={48}
+              alt="profile"
+            />
+            <p className="text-h4 font-semibold">반가워요 ! {MemberInfo?.name}님</p>
           </div>
           <InfoModule text={currentDate} src={CalendarIcon} alt="calendar" />
         </div>
@@ -50,7 +65,7 @@ export default function Login() {
             >
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
-                  title={'심리 테스트가\n항상 맞는 이유는?'}
+                  title={data.title}
                   src={ReportCoverIcon}
                   alt="cover"
                   bgColor="bg-[#EDF1FC]"
