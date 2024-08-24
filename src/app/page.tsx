@@ -7,6 +7,8 @@ import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import { login } from '@/api/auth';
 import { toast } from 'react-toastify';
 import SlideBanner from '@/app/_components/login/SlideBanner';
+import { AppLogoIcon, LogoIcon } from '@/app/_assets/icons';
+import Image from 'next/image';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -42,8 +44,11 @@ const LoginPage = () => {
       </div>
 
       <div className="flex w-1/2 flex-col items-center justify-center rounded-l-3xl bg-primary-100">
-        <div className="flex w-[400px] flex-col items-center gap-y-20">
-          <p>로고 이미지</p>
+        <div className="flex w-[400px] flex-col items-center gap-y-10">
+          <div className="flex flex-col items-center justify-center">
+            <Image src={AppLogoIcon} alt="focusider" />
+            <Image src={LogoIcon} alt="focusider" />
+          </div>
           <div className="flex w-full flex-col items-center gap-y-6">
             <form className="gap-y-4xl flex w-full flex-col" onSubmit={handleLogin}>
               <div className="flex w-full flex-col gap-y-2.5">
