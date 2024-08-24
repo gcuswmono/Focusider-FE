@@ -51,3 +51,9 @@ export const memberInfoSchema = z.object({
   memberGenderType: z.string(),
   createdAt: z.string(),
 });
+
+export const articleInfoSchema = z.object({
+  articleId: z.number(),
+  title: z.string(),
+  content: z.string(),
+});
