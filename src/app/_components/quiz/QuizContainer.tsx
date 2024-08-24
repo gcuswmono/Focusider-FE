@@ -29,7 +29,8 @@ const SignUpContainer = ({ slug }: UserinfoPageComponentsProps) => {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
-        return clearInterval(intervalId);
+        clearInterval(intervalId);
+        return;
       }
 
       const particleCount = 50 * (timeLeft / duration);

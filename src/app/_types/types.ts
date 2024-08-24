@@ -42,3 +42,12 @@ export const quizAnswerSchema = z.object({
   chooseAnswer: z.string(),
   commentaryContent: z.string(),
 });
+
+export const memberInfoSchema = z.object({
+  profileImageUrl: z.string().nullable().optional(),
+  name: z.string(),
+  accountId: z.string(),
+  birthDay: z.string(),
+  memberGenderType: z.string(),
+  createdAt: z.string(),
+});
