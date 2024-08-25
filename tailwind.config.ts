@@ -48,6 +48,15 @@ const config: Config = {
       screens: {
         tablet: '1280px',
       },
+      keyframes: {
+        infiniteSlide: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-300px * 3))' },
+        },
+      },
+      animation: {
+        infiniteSlide: 'infiniteSlide 20s linear infinite',
+      },
     },
   },
   plugins: [],

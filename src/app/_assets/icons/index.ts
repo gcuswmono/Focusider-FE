@@ -35,3 +35,8 @@ export { default as NextArrowIcon } from './next.svg';
 export { default as ClapIcon } from './clap.svg';
 export { default as CloseIcon } from './close.svg';
 export { default as WarningIcon } from './warning.svg';
+export { default as FirstBannerIcon } from './firstBanner.svg';
+export { default as SecondBannerIcon } from './secondBanner.svg';
+export { default as ThirdBannerIcon } from './thirdBanner.svg';
+export { default as AppLogoIcon } from './appLogo.svg';
+export { default as LogoIcon } from './logo.svg';
