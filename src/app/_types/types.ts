@@ -56,5 +56,6 @@ export const articleInfoSchema = z.object({
   articleId: z.number(),
   title: z.string(),
   content: z.string(),
+  question: z.string(),
   categoryType: z.string(),
 });
