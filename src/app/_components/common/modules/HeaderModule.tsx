@@ -22,8 +22,8 @@ const HeaderModule = () => {
   return (
     <div className="flex items-center justify-between border-b border-stroke-100 bg-primary-100 px-[54px] py-3.5">
       <div role="presentation" className="flex items-center" onClick={() => router.push('/home')}>
-        <Image src={AppLogoIcon} alt="focusider" className="h-10 w-10" />
-        <Image src={LogoIcon} alt="focusider" className="-ml-3 h-10" />
+        <Image src={AppLogoIcon} alt="focusider" className="h-9 w-9" />
+        <Image src={LogoIcon} alt="focusider" className="-ml-3.5 h-10" />
       </div>
       <div
         role="presentation"
