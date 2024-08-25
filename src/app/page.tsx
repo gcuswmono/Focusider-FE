@@ -38,7 +38,7 @@ const LoginPage = () => {
     }
   };
   return (
-    <section className="flex h-dvh">
+    <section className="flex h-dvh bg-white">
       <div className="w-1/2">
         <SlideBanner />
       </div>
