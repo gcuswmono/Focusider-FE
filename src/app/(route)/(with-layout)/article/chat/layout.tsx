@@ -2,7 +2,6 @@
 
 import React, { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import NavBarContainer from '@/app/_components/common/containers/NavBarContainer';
 import HeaderNextModule from '@/app/_components/common/modules/HeaderNextModule';
 import ModalModule from '@/app/_components/common/modules/ModalModule';
 import { ClapIcon } from '@/app/_assets/icons';
@@ -27,7 +26,6 @@ const CommonLayout = ({ children }: Props) => {
     <div className="flex h-screen flex-col">
       <HeaderNextModule onClick={handleNextButtonClick} />
       <main className="flex-grow">{children}</main>
-      <NavBarContainer />
       {showModal && (
         <ModalModule
           iconSrc={ClapIcon}
