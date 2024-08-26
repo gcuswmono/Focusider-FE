@@ -22,7 +22,7 @@ const MessageForm = ({ onSendMessage }: MessageFormProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="fixed bottom-0 flex w-full items-center gap-x-1.5 border-t border-gray-200 p-5 xl:w-[1280px]"
+      className="fixed bottom-0 flex w-full items-center gap-x-1.5 border-t border-gray-200 bg-primary-100 p-5 xl:w-[1280px]"
     >
       <input
         type="text"
