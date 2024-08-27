@@ -3,6 +3,10 @@ import { Gowun_Dodum, Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import PageContainer from '@/app/_components/layout/PageContainer';
 import QueryProvider from '@/app/_api/QueryProvider';
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 const gowunDodum = Gowun_Dodum({
@@ -21,6 +25,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      // Capacitor가 네이티브 플랫폼에서 실행될 때만 뒤로 가기 버튼 처리
+      const setupListener = async () => {
+        const backButtonListener = await CapacitorApp.addListener('backButton', () => {
+          // 현재 경로가 "/"가 아니면 이전 페이지로 이동
+          if (pathname !== '/') {
+            router.back();
+          } else {
+            // 현재 경로가 "/"이면 앱 종료
+            CapacitorApp.exitApp();
+          }
+        });
+
+        return () => {
+          if (backButtonListener && typeof backButtonListener.remove === 'function') {
+            backButtonListener.remove();
+          }
+        };
+      };
+
+      setupListener();
+    }
+    return () => {};
+  }, [router, pathname]);
+
   return (
     <html lang="kr" className={`${notoSansKR.className} ${gowunDodum.variable}`}>
       <body>
