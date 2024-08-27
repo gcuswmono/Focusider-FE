@@ -22,8 +22,8 @@ jobs:
 
       - name: Create .env file for Frontend
         run: |
-          rm -rf ./.env.production
-          echo "${{ secrets.ENV }}" >> ./.env.production
+          rm -rf /home/ubuntu/focusider/.env.production
+          echo "${{ secrets.ENV }}" >> /home/ubuntu/focusider/.env.production
 
       - name: pnpm 설치중..
         run: npm install -g pnpm
