@@ -76,3 +76,12 @@ export const articleDetailIinfoSchema = z.object({
   title: z.string(),
   content: z.string(),
 });
+
+export const reportInfoSchema = z.object({
+  weekInfoId: z.number(),
+  title: z.string(),
+});
+
+export const reportInfoListSchema = z.object({
+  weekInfoInfos: reportInfoSchema.array().nullable(),
+});
