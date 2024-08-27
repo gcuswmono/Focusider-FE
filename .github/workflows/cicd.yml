@@ -44,4 +44,4 @@ jobs:
           docker rmi mango0422/focusider-fe:latest || true
           docker rm -f focusider-fe || true
           docker pull mango0422/focusider-fe:latest || true
-          docker compose --env-file /home/ubuntu/focusider/.env.frontend up -d focusider-fe
+          docker compose --env-file /home/ubuntu/focusider/.env.prod up -d focusider-fe
