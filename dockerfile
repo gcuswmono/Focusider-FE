@@ -24,7 +24,7 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 # .env.prod 파일을 실행 스테이지에 복사
-COPY ./.env.prod ./.env.prod
+COPY ./.env.production ./.env.production
 
 EXPOSE 3000
 
