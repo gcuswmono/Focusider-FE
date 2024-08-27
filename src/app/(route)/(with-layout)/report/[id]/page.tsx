@@ -87,17 +87,21 @@ const ReportDetailPage = () => {
 
   return (
     <section className="px-12 pt-8">
-      <p className="mb-7 px-2 text-2xl font-semibold">{data.title}</p>
+      <p className="mb-7 px-2.5 text-2xl font-semibold">{data.title}</p>
 
-      <div className="flex w-full px-6">
+      <div className="flex w-full gap-x-6 px-6">
         <div className="flex w-full flex-col gap-y-1.5">
           <p className="mb-4 pl-1 text-2 font-semibold">📚 읽기 시간</p>
-          <Line data={readingTimeData} options={options} />
+          <div className="px-3">
+            <Line data={readingTimeData} options={options} />
+          </div>
         </div>
 
         <div className="flex w-full flex-col gap-y-1.5">
           <p className="mb-4 pl-1 text-2 font-semibold">📊 이해도</p>
-          <Line data={understandingData} options={options} />
+          <div className="px-3">
+            <Line data={understandingData} options={options} />
+          </div>
         </div>
       </div>
       <div className="w-full px-6 py-10">
