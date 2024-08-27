@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">focusider</string>
+    <string name="title_activity_main">focusider</string>
+    <string name="package_name">focusider.shop</string>
+    <string name="custom_url_scheme">focusider.shop</string>
+</resources>
