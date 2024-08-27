@@ -1,29 +1,20 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
 import NavBarContainer from '@/app/_components/common/containers/NavBarContainer';
+import HeaderNextModule from '@/app/_components/common/modules/HeaderNextModule';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
 }
 
 const CommonLayout = ({ children }: Props) => {
-  const pathname = usePathname();
-
-  const isNestedRoute = pathname.split('/').length > 2;
-  const isQuizRoute = pathname === '/quiz';
-
-  if (isNestedRoute || isQuizRoute) {
-    return (
-      <div className="flex h-screen flex-col">
-        <main className="flex-grow">{children}</main>
-      </div>
-    );
-  }
+  const router = useRouter();
 
   return (
     <div className="flex h-screen flex-col">
+      <HeaderNextModule onClick={() => router.push('/archive')} />
       <main className="flex-grow">{children}</main>
       <NavBarContainer />
     </div>

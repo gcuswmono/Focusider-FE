@@ -7,7 +7,7 @@ interface ArticleCoverImageProps {
 }
 
 const ArticleCoverImageAtom = ({ src, alt }: ArticleCoverImageProps) => {
-  return <Image src={src} alt={alt} width={180} height={196} className="rounded-lg object-cover" />;
+  return <Image src={src} alt={alt} width={220} height={220} className="rounded-lg object-cover" />;
 };
 
 export default ArticleCoverImageAtom;

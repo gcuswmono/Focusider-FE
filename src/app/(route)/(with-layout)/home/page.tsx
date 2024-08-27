@@ -12,6 +12,7 @@ import {
   PeopleIcon,
   QuizCoverIcon,
   ReportCoverIcon,
+  ScienceCoverIcon,
 } from '@/app/_assets/icons';
 import InfoModule from '@/app/_components/common/modules/InfoModule';
 import { useRouter } from 'next/navigation';
@@ -68,7 +69,7 @@ export default function Login() {
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
                   title={data.title}
-                  src={ReportCoverIcon}
+                  src={ScienceCoverIcon}
                   alt="cover"
                   bgColor="bg-[#EDF1FC]"
                 />

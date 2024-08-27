@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['focusider.s3.ap-northeast-2.amazonaws.com'],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
