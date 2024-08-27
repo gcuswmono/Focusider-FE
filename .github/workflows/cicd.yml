@@ -38,6 +38,6 @@ jobs:
           echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker rmi mango0422/focusider-fe:latest || true
           docker pull mango0422/focusider-fe:latest || true
-          docker stop focusider-fe || true
-          docker rm focusider-fe || true
-          docker run -d --name focusider-fe -p 3000:3000 mango0422/focusider-fe:latest
+          docker compose stop focusider-fe || true
+          docker compose rm focusider-fe || true
+          docker compose up -d focusider-fe
