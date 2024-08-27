@@ -71,3 +71,8 @@ export const articleArchiveListSchema = z.object({
   readingInfos: articleArchiveInfoSchema.array().nullable(),
   pageInfo: pageInfoSchema,
 });
+
+export const articleDetailIinfoSchema = z.object({
+  title: z.string(),
+  content: z.string(),
+});
