@@ -59,3 +59,15 @@ export const articleInfoSchema = z.object({
   question: z.string(),
   categoryType: z.string(),
 });
+
+export const articleArchiveInfoSchema = z.object({
+  articleId: z.number(),
+  title: z.string(),
+  categoryType: z.string(),
+  readingDate: z.string(),
+});
+
+export const articleArchiveListSchema = z.object({
+  readingInfos: articleArchiveInfoSchema.array().nullable(),
+  pageInfo: pageInfoSchema,
+});
