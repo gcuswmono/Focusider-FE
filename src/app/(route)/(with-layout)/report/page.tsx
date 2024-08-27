@@ -10,7 +10,11 @@ import TableHeaderAtom from '@/app/_components/common/atoms/TableHeaderAtom';
 import TableRowModule from '@/app/_components/common/modules/TableRowModule';
 import TableRowAtom from '@/app/_components/common/atoms/TableRowAtom';
 import Loading from '@/app/_components/common/atoms/Loading';
-import { ChevronLeftBlackIcon, ChevronRightBlackIcon } from '@/app/_assets/icons';
+import {
+  ChevronLeftBlackIcon,
+  ChevronRightBlackIcon,
+  RightArrowGrayIcon,
+} from '@/app/_assets/icons';
 import { useGetReportQuery } from '@/app/_api/report/useGetReportQuery';
 
 const ArticleArchivePage = () => {
@@ -24,6 +28,14 @@ const ArticleArchivePage = () => {
 
   const { data, isLoading, isError } = useGetReportQuery({ date: formattedDate });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError || !data) {
+    return <div>Failed to load data.</div>;
+  }
+
   const handleNextMonth = () => {
     if (!isNextMonthDisabled) {
       setCurrentDate(addMonths(currentDate, 1));
@@ -33,14 +45,6 @@ const ArticleArchivePage = () => {
   const handlePrevMonth = () => {
     setCurrentDate(subMonths(currentDate, 1));
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError || !data) {
-    return <div>Failed to load data.</div>;
-  }
 
   const articles = data?.weekInfoInfos ?? [];
 
@@ -62,11 +66,11 @@ const ArticleArchivePage = () => {
 
           <TableContainer>
             <TableHeaderModule>
-              <TableHeaderAtom isFirst width="80px">
+              <TableHeaderAtom isFirst width="100px">
                 번호
               </TableHeaderAtom>
               <TableHeaderAtom>제목</TableHeaderAtom>
-              <TableHeaderAtom isLast width="180px" />
+              <TableHeaderAtom isLast width="160px" />
             </TableHeaderModule>
             <tbody>
               {articles.length === 0 ? (
@@ -83,11 +87,8 @@ const ArticleArchivePage = () => {
                     <TableRowAtom>{item.title}</TableRowAtom>
 
                     <TableRowAtom isLast>
-                      <button
-                        className="rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
-                        onClick={() => router.push(`/archive/${item.weekInfoId}`)}
-                      >
-                        다시 읽어보기
+                      <button onClick={() => router.push(`/report/${item.weekInfoId}`)}>
+                        <Image src={RightArrowGrayIcon} alt=">" />
                       </button>
                     </TableRowAtom>
                   </TableRowModule>
