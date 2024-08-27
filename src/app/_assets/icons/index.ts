@@ -42,3 +42,4 @@ export { default as AppLogoIcon } from './appLogo.svg';
 export { default as LogoIcon } from './logo.svg';
 export { default as SendIcon } from './send.svg';
 export { default as ScienceCoverIcon } from './scienceCover.svg';
+export { default as RightArrowGrayIcon } from './rightArrowGray.svg';
