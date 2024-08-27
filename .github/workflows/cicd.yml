@@ -19,6 +19,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.16.0'
+      - name: ENV File 설정중
+        run: |
+          touch .env
+          echo "${{ secrets.ENV }}" >> .env
+        shell: bash
 
       - name: pnpm 설치중..
         run: npm install -g pnpm
