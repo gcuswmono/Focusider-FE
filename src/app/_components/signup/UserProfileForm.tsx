@@ -191,15 +191,15 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
             <div className="flex h-14 w-full">
               <button
                 type="button"
-                onClick={() => onGenderSelect('male')}
-                className={`grow rounded-l px-4 py-2 ${localData.gender === 'male' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                onClick={() => onGenderSelect('MALE')}
+                className={`grow rounded-l px-4 py-2 ${localData.gender === 'MALE' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
               >
                 남자
               </button>
               <button
                 type="button"
-                onClick={() => onGenderSelect('female')}
-                className={`grow rounded-r px-4 py-2 ${localData.gender === 'female' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                onClick={() => onGenderSelect('FEMALE')}
+                className={`grow rounded-r px-4 py-2 ${localData.gender === 'FEMALE' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
               >
                 여자
               </button>
