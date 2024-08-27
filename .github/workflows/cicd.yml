@@ -23,7 +23,7 @@ jobs:
       - name: Create .env file for Frontend
         run: |
           rm -rf /home/ubuntu/focusider/.env.production
-          echo "${{ secrets.ENV }}" >> /home/ubuntu/focusider/.env.production
+          echo "${{ secrets.ENV }}" >> ./.env.production
 
       - name: pnpm 설치중..
         run: npm install -g pnpm
@@ -44,4 +44,4 @@ jobs:
           docker rmi mango0422/focusider-fe:latest || true
           docker rm -f focusider-fe || true
           docker pull mango0422/focusider-fe:latest || true
-          docker compose --env-file ./.env.production up -d focusider-fe
+          docker compose -d focusider-fe
