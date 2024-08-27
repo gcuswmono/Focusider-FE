@@ -2,6 +2,7 @@
 
 import FontSizeControllerModule from '@/app/_components/common/modules/FontSizeControllerModule';
 import { useGetArticleDetailQuery } from '@/app/_api/archive/useGetArticleDetailQuery';
+import Loading from '@/app/_components/common/atoms/Loading';
 
 const ArticleDetailPage = () => {
   const articleId =
@@ -10,7 +11,7 @@ const ArticleDetailPage = () => {
   const { data: article, isLoading, error } = useGetArticleDetailQuery(Number(articleId));
 
   if (isLoading) {
-    return <p>Loading article...</p>;
+    return <Loading />;
   }
 
   if (error) {
