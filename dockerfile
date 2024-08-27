@@ -23,6 +23,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
+# .env.prod 파일을 실행 스테이지에 복사
+COPY /home/ubuntu/focusider/.env.prod ./.env.prod
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]
