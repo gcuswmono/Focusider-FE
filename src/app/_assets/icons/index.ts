@@ -41,3 +41,4 @@ export { default as ThirdBannerIcon } from './thirdBanner.svg';
 export { default as AppLogoIcon } from './appLogo.svg';
 export { default as LogoIcon } from './logo.svg';
 export { default as SendIcon } from './send.svg';
+export { default as ScienceCoverIcon } from './scienceCover.svg';
