@@ -19,10 +19,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.16.0'
-      - name: ENV File 설정중
+
+      - name: Create .env file for Frontend
         run: |
-          touch .env
-          echo "${{ secrets.ENV }}" >> .env
+          rm -rf /home/ubuntu/focusider/.env.prod
+          touch /home/ubuntu/focusider/.env.prod
+          echo "${{ secrets.ENV }}" >> /home/ubuntu/focusider/.env.prod
         shell: bash
 
       - name: pnpm 설치중..
@@ -32,7 +34,6 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: |
           docker build --cache-from mango0422/focusider-fe:latest -t mango0422/focusider-fe:latest .
           echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
@@ -41,7 +42,8 @@ jobs:
       - name: Docker Login and Deploy Docker Container
         run: |
           echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          cd /home/ubuntu/focusider
           docker rmi mango0422/focusider-fe:latest || true
           docker rm -f focusider-fe || true
           docker pull mango0422/focusider-fe:latest || true
-          docker compose up -d focusider-fe
+          docker compose --env-file /home/ubuntu/focusider/.env.frontend up -d focusider-fe
