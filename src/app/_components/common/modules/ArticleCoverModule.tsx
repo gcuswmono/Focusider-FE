@@ -13,12 +13,14 @@ interface ArticleCoverModuleProps {
 
 const ArticleCoverModule = ({ title, src, alt, bgColor }: ArticleCoverModuleProps) => {
   return (
-    <button className={`flex flex-col ${bgColor} h-[338px] w-[310px] gap-y-5 rounded-lg p-6`}>
+    <button
+      className={`flex flex-col justify-between ${bgColor} h-[338px] w-[310px] gap-y-5 rounded-lg p-6`}
+    >
       <div className="mb-2 flex w-full items-start justify-between">
         <ArticleCoverTitleAtom title={title} />
         <Image src={PointScanIcon} alt="icon" width={24} height={24} />
       </div>
-      <div className="flex w-full items-end justify-end">
+      <div className="-mr-3 flex w-full items-end justify-end">
         <ArticleCoverImageAtom src={src} alt={alt} />
       </div>
     </button>
