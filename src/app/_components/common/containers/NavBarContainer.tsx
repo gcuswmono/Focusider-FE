@@ -58,7 +58,7 @@ const NavBarContainer = () => {
             iconSrcInactive={item.iconSrcInactive}
             iconAlt={item.iconAlt}
             text={item.text}
-            isActive={pathname === item.path}
+            isActive={pathname.includes(item.path)}
             onClick={() => router.push(item.path)}
           />
         ))}
