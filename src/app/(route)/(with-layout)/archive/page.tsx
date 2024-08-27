@@ -10,23 +10,31 @@ import TableRowAtom from '@/app/_components/common/atoms/TableRowAtom';
 import PaginationModule from '@/app/_components/common/modules/PaginationModule';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useGetHistoryQuery } from '@/app/_api/archive/useGetHistoryQuery';
+import Loading from '@/app/_components/common/atoms/Loading';
+import { ArticleKeywordType, ArticleKeywordTypeConverter } from '@/app/_types/converter';
+import { format } from 'date-fns';
 
 const ArticleArchivePage = () => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const data = [
-    {
-      id: 1,
-      category: '과학',
-      title: '제목 예시 1',
-      date: '2024.07.08',
+  const { data, isLoading, isError } = useGetHistoryQuery({
+    pageParam: {
+      page: currentPage,
+      size: 5,
     },
-    { id: 2, category: '기술', title: '제목 예시 2', date: '2024.07.09' },
-    { id: 3, category: '문학', title: '제목 예시 3', date: '2024.07.10' },
-    { id: 4, category: '문학', title: '제목 예시 3', date: '2024.07.10' },
-    { id: 5, category: '문학', title: '제목 예시 3', date: '2024.07.10' },
-  ];
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError || !data) {
+    return <div>Failed to load data.</div>;
+  }
+
+  const articles = data?.readingInfos ?? [];
 
   return (
     <section className="flex h-full w-full items-center justify-center">
@@ -45,32 +53,47 @@ const ArticleArchivePage = () => {
               <TableHeaderAtom isLast width="180px" />
             </TableHeaderModule>
             <tbody>
-              {data.map((item, index) => (
-                <TableRowModule key={item.id}>
-                  <TableRowAtom isFirst>{item.id}</TableRowAtom>
-                  <TableRowAtom>{item.category}</TableRowAtom>
-                  <TableRowAtom>{item.title}</TableRowAtom>
-                  <TableRowAtom>{item.date}</TableRowAtom>
-                  <TableRowAtom isLast>
-                    <button
-                      className="rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
-                      onClick={() => router.push(`/archive/${item.id}`)}
-                    >
-                      다시 읽어보기
-                    </button>
-                  </TableRowAtom>
-                </TableRowModule>
-              ))}
+              {articles.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="mt-4 rounded-md py-52 text-center text-sub-200">
+                    내역이 존재하지 않습니다.
+                  </td>
+                </tr>
+              ) : (
+                articles.map((item, index) => (
+                  <TableRowModule key={item.articleId}>
+                    <TableRowAtom isFirst>{index + 1}</TableRowAtom>
+                    <TableRowAtom>
+                      {ArticleKeywordTypeConverter[item.categoryType as ArticleKeywordType]}
+                    </TableRowAtom>
+                    <TableRowAtom>{item.title}</TableRowAtom>
+                    <TableRowAtom>
+                      {item.readingDate ? format(new Date(item.readingDate), 'yyyy.MM.dd') : ''}
+                    </TableRowAtom>
+                    <TableRowAtom isLast>
+                      <button
+                        className="rounded-full bg-white px-3 py-1.5 text-4 font-semibold text-sub-300"
+                        onClick={() => router.push(`/archive/${item.articleId}`)}
+                      >
+                        다시 읽어보기
+                      </button>
+                    </TableRowAtom>
+                  </TableRowModule>
+                ))
+              )}
             </tbody>
           </TableContainer>
         </div>
-        <div className="flex justify-center py-5">
-          <PaginationModule
-            totalPages={5}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+
+        {articles.length > 0 && (
+          <div className="flex justify-center py-5">
+            <PaginationModule
+              totalPages={data.pageInfo.totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
