@@ -2,6 +2,7 @@
 
 import FontSizeControllerModule from '@/app/_components/common/modules/FontSizeControllerModule';
 import { useGetArticleDetailQuery } from '@/app/_api/archive/useGetArticleDetailQuery';
+import Loading from '@/app/_components/common/atoms/Loading';
 
 const ArticleDetailPage = () => {
   const articleId =
@@ -10,7 +11,7 @@ const ArticleDetailPage = () => {
   const { data: article, isLoading, error } = useGetArticleDetailQuery(Number(articleId));
 
   if (isLoading) {
-    return <p>Loading article...</p>;
+    return <Loading />;
   }
 
   if (error) {
@@ -19,7 +20,6 @@ const ArticleDetailPage = () => {
 
   return (
     <section className="px-12 pt-8">
-      {/* Check if the article data is available before rendering */}
       {article && (
         <FontSizeControllerModule initialSize={16} title={article.title}>
           <div className="max-h-[calc(100vh*0.60)] overflow-y-auto whitespace-pre-line py-6 lg:max-h-[calc(100vh*0.70)]">

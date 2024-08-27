@@ -7,12 +7,22 @@ import { ArticleKeywordType, ArticleKeywordTypeConverter } from '@/app/_types/co
 
 import Image from 'next/image';
 import {
+  AmalgamationCoverIcon,
+  AmalgamationIcon,
+  ArtCoverIcon,
+  ArtIcon,
   CalendarIcon,
   EmptyProfileIcon,
-  PeopleIcon,
+  HumanitiesCoverIcon,
+  HumanitiesIcon,
   QuizCoverIcon,
   ReportCoverIcon,
   ScienceCoverIcon,
+  ScienceIcon,
+  SocietyCoverIcon,
+  SocietyIcon,
+  TechnologyCoverIcon,
+  TechnologyIcon,
 } from '@/app/_assets/icons';
 import InfoModule from '@/app/_components/common/modules/InfoModule';
 import { useRouter } from 'next/navigation';
@@ -35,6 +45,48 @@ export default function Login() {
   const { data: MemberInfo } = useGetMemberInfoQuery();
   if (isLoading) return <Loading />;
   if (isError || !data) return <p>error</p>;
+
+  const getCategoryIcon = (categoryType: ArticleKeywordType) => {
+    switch (categoryType) {
+      case 'SCIENCE':
+        return {
+          infoModuleSrc: ScienceIcon,
+          coverModuleSrc: ScienceCoverIcon,
+        };
+      case 'ART':
+        return {
+          infoModuleSrc: ArtIcon,
+          coverModuleSrc: ArtCoverIcon,
+        };
+      case 'SOCIETY':
+        return {
+          infoModuleSrc: SocietyIcon,
+          coverModuleSrc: SocietyCoverIcon,
+        };
+      case 'TECHNOLOGY':
+        return {
+          infoModuleSrc: TechnologyIcon,
+          coverModuleSrc: TechnologyCoverIcon,
+        };
+      case 'HUMANITIES':
+        return {
+          infoModuleSrc: HumanitiesIcon,
+          coverModuleSrc: HumanitiesCoverIcon,
+        };
+      case 'AMALGAMATION':
+        return {
+          infoModuleSrc: AmalgamationIcon,
+          coverModuleSrc: AmalgamationCoverIcon,
+        };
+      default:
+        return {
+          infoModuleSrc: HumanitiesIcon,
+          coverModuleSrc: HumanitiesCoverIcon,
+        };
+    }
+  };
+
+  const categoryIcons = getCategoryIcon(data.categoryType as ArticleKeywordType);
 
   return (
     <section className="flex h-full w-full items-center justify-center bg-primary-100">
@@ -62,14 +114,14 @@ export default function Login() {
               backgroundColor="bg-primary-300"
               titleColor="text-white"
               subtitleColor="text-stroke-100"
-              infoModuleSrc={PeopleIcon}
+              infoModuleSrc={categoryIcons.infoModuleSrc}
               infoModuleAlt="icon"
               infoModuleText={ArticleKeywordTypeConverter[data.categoryType as ArticleKeywordType]}
             >
               <div className="mt-8 flex justify-end">
                 <ArticleCoverModule
                   title={data.title}
-                  src={ScienceCoverIcon}
+                  src={categoryIcons.coverModuleSrc}
                   alt="cover"
                   bgColor="bg-[#EDF1FC]"
                 />

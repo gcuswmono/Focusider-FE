@@ -1,11 +1,24 @@
-export type KeywordType = 'WORDS_AND_EXPRESSIONS' | 'VOCABULARY' | 'PROVERB';
+export type KeywordType =
+  | 'WORDS_AND_EXPRESSIONS'
+  | 'VOCABULARY'
+  | 'PROVERB'
+  | 'FOUR_IDIOMS'
+  | 'GRAMMER';
 
-export const KeywordTypeList: KeywordType[] = ['WORDS_AND_EXPRESSIONS', 'VOCABULARY', 'PROVERB'];
+export const KeywordTypeList: KeywordType[] = [
+  'WORDS_AND_EXPRESSIONS',
+  'VOCABULARY',
+  'PROVERB',
+  'FOUR_IDIOMS',
+  'GRAMMER',
+];
 
 export const KeywordTypeConverter: { [key in KeywordType]: string } = {
-  WORDS_AND_EXPRESSIONS: '유형 A',
-  VOCABULARY: '유형 B',
-  PROVERB: '유형 C',
+  WORDS_AND_EXPRESSIONS: '단어와 표현',
+  VOCABULARY: '어휘력',
+  PROVERB: '속담',
+  FOUR_IDIOMS: '사자성어',
+  GRAMMER: '문법',
 };
 
 export type ArticleKeywordType =
