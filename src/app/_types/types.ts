@@ -85,3 +85,15 @@ export const reportInfoSchema = z.object({
 export const reportInfoListSchema = z.object({
   weekInfoInfos: reportInfoSchema.array().nullable(),
 });
+
+export const readingStatInfoSchema = z.object({
+  readingDate: z.string(),
+  readingTime: z.number(),
+  understanding: z.number(),
+});
+
+export const reportDetailInfoSchema = z.object({
+  title: z.string(),
+  comment: z.string(),
+  readingStatInfos: readingStatInfoSchema.array(),
+});
