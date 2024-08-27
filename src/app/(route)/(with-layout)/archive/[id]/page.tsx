@@ -20,7 +20,6 @@ const ArticleDetailPage = () => {
 
   return (
     <section className="px-12 pt-8">
-      {/* Check if the article data is available before rendering */}
       {article && (
         <FontSizeControllerModule initialSize={16} title={article.title}>
           <div className="max-h-[calc(100vh*0.60)] overflow-y-auto whitespace-pre-line py-6 lg:max-h-[calc(100vh*0.70)]">
