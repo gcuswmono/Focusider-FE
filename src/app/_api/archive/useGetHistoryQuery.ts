@@ -10,7 +10,7 @@ export const useGetHistoryQuery = ({
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
-    queryKey: [useGetHistoryQueryKey],
+    queryKey: [useGetHistoryQueryKey, pageParam],
     queryFn: async () => {
       const res = await http.get<BaseResponse<void>>({
         url: '/api/article/reading-list',

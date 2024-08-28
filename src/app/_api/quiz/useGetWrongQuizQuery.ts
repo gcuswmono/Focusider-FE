@@ -10,7 +10,7 @@ export const useGetWrongQuizQuery = ({
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
-    queryKey: [useGetWrongQuizQueryKey],
+    queryKey: [useGetWrongQuizQueryKey, pageParam],
     queryFn: async () => {
       const res = await http.get<BaseResponse<void>>({
         url: '/api/quiz/wrong/list',
