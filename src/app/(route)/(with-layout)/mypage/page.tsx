@@ -113,9 +113,6 @@ const MyPage = () => {
                 height={100}
                 className="h-28 w-28 rounded-full object-cover"
               />
-              <button className="absolute -bottom-2 -right-2" type="button">
-                <Image src={AddProfileIcon} alt="profileEdit" />
-              </button>
             </div>
           </div>
 
