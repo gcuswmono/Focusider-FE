@@ -22,6 +22,7 @@ const ChatPage = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<string>('');
   const [messageCount, setMessageCount] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const readTime = parseInt(searchParams.get('readTime') || '0', 10);
 
@@ -31,6 +32,7 @@ const ChatPage = () => {
     },
     errorCallback: (error) => {
       console.error('Failed to post result:', error);
+      setIsSubmitting(false);
     },
   });
 
@@ -69,6 +71,7 @@ const ChatPage = () => {
   };
 
   const onEndButtonClick = () => {
+    setIsSubmitting(true);
     postResult({
       articleId: questionData?.articleId || 0,
       readTime,
@@ -78,8 +81,8 @@ const ChatPage = () => {
   return (
     <section className="flex h-dvh w-full flex-col">
       <HeaderNextModule onClick={onEndButtonClick} />
-      <div className="flex-grow overflow-y-auto bg-white px-8 pb-20 pt-6">
-        {isLoading ? (
+      <div className="flex-grow overflow-y-auto px-8 pb-20 pt-6">
+        {isLoading || isSubmitting ? (
           <Loading />
         ) : (
           <>
@@ -95,7 +98,7 @@ const ChatPage = () => {
           </>
         )}
       </div>
-      <MessageForm onSendMessage={onSendMessage} />
+      {!isSubmitting && <MessageForm onSendMessage={onSendMessage} />}
     </section>
   );
 };
