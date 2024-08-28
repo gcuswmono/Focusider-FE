@@ -26,3 +26,7 @@ export interface AddRequestBody {
   readingHardType: string | null;
   categoryTypes: Category[] | null;
 }
+
+export interface DuplicateRequestBody {
+  accountId: string;
+}
