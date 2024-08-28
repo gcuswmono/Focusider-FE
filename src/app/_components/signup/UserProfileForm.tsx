@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
 import { signUp } from '@/api/auth';
 import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 import useSignUp from './SignUpContext';
 import useCategory from './CategoryContext';
 
@@ -56,19 +57,33 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
     signUpData.gender = localData.gender;
     signUpData.birthday = `${localData.year}-${localData.month}-${localData.day}`;
     signUpData.profileImage = profileImage || '';
+
     try {
-      signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
+      // 회원가입 요청
+      await signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
       toast.success('회원가입이 완료되었습니다.', {
         pauseOnHover: false,
         autoClose: 1000,
       });
+
+      // 회원가입이 완료되었을 때 다음 페이지로 이동
       req.accountId = signUpData.accountId;
       router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
-    } catch (signupError) {
-      toast.error(`Sign up failed: ${signupError}`, {
-        pauseOnHover: false,
-        autoClose: 1000,
-      });
+    } catch (signup_error: unknown) {
+      // 에러가 AxiosError인지 확인하고 타입을 좁혀서 처리
+      if (signup_error instanceof AxiosError) {
+        const errorMessage = signup_error.response?.data?.message || '회원가입에 실패했습니다.';
+        toast.error(errorMessage, {
+          pauseOnHover: false,
+          autoClose: 3000,
+        });
+      } else {
+        // AxiosError가 아닌 일반 에러 처리
+        toast.error('알 수 없는 오류가 발생했습니다.', {
+          pauseOnHover: false,
+          autoClose: 3000,
+        });
+      }
     }
   };
 
