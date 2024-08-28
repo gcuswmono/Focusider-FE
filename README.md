@@ -1,8 +1,10 @@
 # 💬 대화를 통한 문해력 향상 솔루션, Focusider
 
-<div align="center">
+<!-- <div align="center">
   <img src="public/images/cover.png" alt="focusider_cover" />
-</div>
+</div> -->
+
+[![Video Label](http://img.youtube.com/vi/ZPJ92J426p4/0.jpg)](https://www.youtube.com/watch?v=ZPJ92J426p4)
 
 <br />
 
