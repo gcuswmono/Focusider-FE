@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import SlideBanner from '@/app/_components/login/SlideBanner';
 import { AppLogoIcon, LogoIcon } from '@/app/_assets/icons';
 import Image from 'next/image';
-import { useLoginMutation } from '@/api/auth';
+import { useLoginMutation } from '@/app/_api/auth';
 
 const LoginPage = () => {
   const router = useRouter();

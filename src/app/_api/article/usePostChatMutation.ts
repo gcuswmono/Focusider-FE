@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BaseResponse } from '@/api';
+import { BaseResponse } from '@/app/_api';
 import api from '../Axios';
 
 interface ChatRequest {

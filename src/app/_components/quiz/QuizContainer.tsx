@@ -51,7 +51,7 @@ const SignUpContainer = ({ slug }: UserinfoPageComponentsProps) => {
     if (pageNum !== '1' && pageNum !== '2' && pageNum !== '3') {
       handleConfetti();
     }
-  }, [pageNum]);
+  }, [handleConfetti, pageNum]);
 
   switch (pageNum) {
     case '1':

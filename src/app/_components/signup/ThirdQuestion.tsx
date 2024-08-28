@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProgressBar from '@/app/_components/common/atoms/ProgressBar';
 import useCategory, { Category } from '@/app/_components/signup/CategoryContext';
-import { add } from '@/api/auth/api';
-import { AddRequestBody } from '@/api/auth/types';
+import { add } from '@/app/_api/auth/api';
 
 interface ThirdQuestionPageProps {
   currentQuestion: number;

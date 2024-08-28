@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
-import { useDuplicateCheckMutation } from '@/api/auth/queries';
+import { useDuplicateCheckMutation } from '@/app/_api/auth/queries';
 import useSignUp from './SignUpContext';
 import LoadingOnPost from '../common/atoms/LoadingOnPost';
 

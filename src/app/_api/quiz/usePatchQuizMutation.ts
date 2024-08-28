@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BaseResponse } from '@/api';
+import { BaseResponse } from '@/app/_api';
 import { useGetWrongQuizQueryKey } from '@/app/_api/quiz/useGetWrongQuizQuery';
 import api from '../Axios';
 

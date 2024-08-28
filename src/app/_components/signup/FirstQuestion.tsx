@@ -18,14 +18,7 @@ const FirstQuestionPage = ({
 }: FirstQuestionPageProps) => {
   const [selectedOption, setSelectedOption] = useState<typeof req.readingTermType | null>(null);
   const router = useRouter();
-  const { req, setReq } = useCategory();
-  const options: (typeof req)['readingTermType'][] = [
-    'EVERYDAY', // 매일 읽어요
-    'ONCE_A_WEEK', // 일주일에 1-2회 정도 읽어요
-    'SOMETIMES', // 아주 가끔 읽어요
-    'ALMOST_NONE', // 거의 읽지 않아요
-  ];
-
+  const { req } = useCategory();
   const handleNext = () => {
     if (selectedOption) {
       req.readingTermType = selectedOption;

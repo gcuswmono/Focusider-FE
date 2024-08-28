@@ -6,9 +6,8 @@ import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import Image from 'next/image';
 import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
-import { useSignUpMutation } from '@/api/auth';
+import { useSignUpMutation } from '@/app/_api/auth';
 import { toast } from 'react-toastify';
-import { AxiosError } from 'axios';
 import useSignUp from './SignUpContext';
 import useCategory from './CategoryContext';
 import Loading from '../common/atoms/Loading';
@@ -19,7 +18,7 @@ interface UserProfileFormProps {
 
 const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const router = useRouter();
-  const { req, setReq } = useCategory();
+  const { req } = useCategory();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [localData, setLocalData] = useState<{
     name: string;

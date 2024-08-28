@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { quizInfoSchema } from '@/app/_types/types';
-import { BaseResponse, http } from '@/api';
+import { BaseResponse, http } from '@/app/_api';
 
 export const useGetQuizQueryKey = 'useGetQuizQuery';
 

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { reportInfoListSchema } from '@/app/_types/types';
-import { BaseResponse, http } from '@/api';
+import { BaseResponse, http } from '@/app/_api';
 
 export const useGetReportQueryKey = 'useGetReportQuery';
 
