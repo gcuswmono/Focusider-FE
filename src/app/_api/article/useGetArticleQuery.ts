@@ -1,5 +1,5 @@
 import { articleInfoSchema } from '@/app/_types/types';
-import { BaseResponse, http } from '@/api';
+import { BaseResponse, http } from '@/app/_api';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetArticleQueryKey = 'useGetArticleQuery';

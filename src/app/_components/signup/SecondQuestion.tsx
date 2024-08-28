@@ -18,7 +18,7 @@ const SecondQuestionPage = ({
 }: SecondQuestionPageProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const router = useRouter();
-  const { req, setReq } = useCategory();
+  const { req } = useCategory();
 
   const mapLabelToOption = (label: string) => {
     switch (label) {

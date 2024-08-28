@@ -1,4 +1,4 @@
-import { BaseResponse, http } from '@/api';
+import { BaseResponse, http } from '@/app/_api';
 import { useMutation } from '@tanstack/react-query';
 
 export const useLogoutMutation = ({

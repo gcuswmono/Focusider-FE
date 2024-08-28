@@ -26,7 +26,7 @@ const QuizInfoContainer = ({ pageNum }: QuizContainerProps) => {
     commentaryContent: string;
   }>(null);
 
-  const { data, isLoading, isError, refetch } = useGetQuizQuery();
+  const { data, isLoading, refetch } = useGetQuizQuery();
   const router = useRouter();
 
   const { mutate: postQuiz } = usePostQuizMutation({
