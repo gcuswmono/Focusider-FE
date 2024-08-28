@@ -95,5 +95,6 @@ export const readingStatInfoSchema = z.object({
 export const reportDetailInfoSchema = z.object({
   title: z.string(),
   comment: z.string(),
+  startDate: z.string(),
   readingStatInfos: readingStatInfoSchema.array(),
 });

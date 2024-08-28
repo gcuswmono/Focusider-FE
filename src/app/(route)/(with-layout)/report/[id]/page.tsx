@@ -12,7 +12,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { format } from 'date-fns';
+import { addDays, eachDayOfInterval, format } from 'date-fns';
 import Loading from '@/app/_components/common/atoms/Loading';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -37,14 +37,25 @@ const ReportDetailPage = () => {
     return <p>Error fetching article details.</p>;
   }
 
-  const dates = data?.readingStatInfos.map((stat: ReadingStatInfo) =>
-    format(new Date(stat.readingDate), 'MM/dd'),
+  const startDate = new Date(data.startDate);
+  const endDate = addDays(startDate, 6);
+
+  const allDates = eachDayOfInterval({ start: startDate, end: endDate }).map((date) =>
+    format(date, 'MM/dd'),
   );
-  const readingTimes = data?.readingStatInfos.map((stat: ReadingStatInfo) => stat.readingTime);
-  const understanding = data?.readingStatInfos.map((stat: ReadingStatInfo) => stat.understanding);
+
+  const readingStatMap = new Map(
+    data.readingStatInfos.map((stat: ReadingStatInfo) => [
+      format(new Date(stat.readingDate), 'MM/dd'),
+      stat,
+    ]),
+  );
+
+  const readingTimes = allDates.map((date) => readingStatMap.get(date)?.readingTime || 0);
+  const understanding = allDates.map((date) => readingStatMap.get(date)?.understanding || 0);
 
   const readingTimeData = {
-    labels: dates,
+    labels: allDates,
     datasets: [
       {
         label: 'Reading Time (minutes)',
@@ -58,7 +69,7 @@ const ReportDetailPage = () => {
   };
 
   const understandingData = {
-    labels: dates,
+    labels: allDates,
     datasets: [
       {
         label: 'Understanding (%)',
