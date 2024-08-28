@@ -143,11 +143,8 @@
     <th>채팅</th>
   </tr>
   <tr>
-    <td><img width="600" alt="image" src="public/images/article.png" /></td>
-    <td><video width="600" controls>
-          <source src="public/videos/chatbot_interaction.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+    <td><img width="600" alt="image" src="public/images/article_1.png" /></td>
+    <td><img width="600" alt="image" src="public/images/article_2.png" />
     </td>
   </tr>
 </table>
