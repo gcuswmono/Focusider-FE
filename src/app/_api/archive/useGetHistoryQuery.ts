@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetHistoryQueryKey = 'useGetHistoryQuery';
 
 export const useGetHistoryQuery = ({
-                                     pageParam,
-                                   }: {
+  pageParam,
+}: {
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
