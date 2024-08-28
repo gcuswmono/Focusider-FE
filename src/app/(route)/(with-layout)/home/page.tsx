@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import CardContainer from '@/app/_components/common/containers/CardContainer';
 import ArticleCoverModule from '@/app/_components/common/modules/ArticleCoverModule';
 import { ArticleKeywordType, ArticleKeywordTypeConverter } from '@/app/_types/converter';
-
 import Image from 'next/image';
 import {
   AmalgamationCoverIcon,
@@ -29,10 +28,15 @@ import { useRouter } from 'next/navigation';
 import { useGetArticleQuery } from '@/app/_api/article/useGetArticleQuery';
 import Loading from '@/app/_components/common/atoms/Loading';
 import { useGetMemberInfoQuery } from '@/app/_api/member/useGetMemberInfoQuery';
+import { App as CapacitorApp } from '@capacitor/app';
+import ExitModal from '@/app/_components/common/ExitModal'; // Modal UI 컴포넌트 import
 
 export default function Login() {
   const router = useRouter();
   const [currentDate, setCurrentDate] = useState('');
+  const [showExitModal, setShowExitModal] = useState(false); // 모달을 보여줄지 관리하는 상태
+  const { data, isLoading, isError } = useGetArticleQuery();
+  const { data: MemberInfo } = useGetMemberInfoQuery();
 
   useEffect(() => {
     const today = new Date();
@@ -40,9 +44,22 @@ export default function Login() {
     setCurrentDate(formattedDate);
   }, []);
 
-  const { data, isLoading, isError } = useGetArticleQuery();
+  // Capacitor의 backButton 이벤트 리스너 추가
+  useEffect(() => {
+    const handleBackButton = async () => {
+      const backButtonListener = await CapacitorApp.addListener('backButton', () => {
+        // 모달을 열어 "정말 종료하시겠습니까?" 메시지를 보여줍니다.
+        setShowExitModal(true);
+      });
 
-  const { data: MemberInfo } = useGetMemberInfoQuery();
+      return () => {
+        backButtonListener.remove();
+      };
+    };
+
+    handleBackButton();
+  }, []);
+
   if (isLoading) return <Loading />;
   if (isError || !data) return <p>error</p>;
 
@@ -159,6 +176,15 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      {/* 모달을 띄우는 부분 */}
+      {showExitModal && (
+        <ExitModal
+          onConfirm={() => CapacitorApp.exitApp()} // 종료 확인 버튼
+          onCancel={() => setShowExitModal(false)} // 취소 버튼
+          open={false}
+        />
+      )}
     </section>
   );
 }

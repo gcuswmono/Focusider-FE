@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'focusider',
   webDir: 'out',
   server: {
-    url: 'http://focusider.shop', // 배포된 Next.js 앱 URL
+    url: 'https://focusider.shop', // 배포된 Next.js 앱 URL
     cleartext: true,
   },
 };

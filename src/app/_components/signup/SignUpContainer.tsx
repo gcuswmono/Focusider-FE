@@ -7,31 +7,17 @@ import FirstQuestionPage from '@/app/_components/signup/FirstQuestion';
 import SecondQuestionPage from '@/app/_components/signup/SecondQuestion';
 import ThirdQuestionPage from '@/app/_components/signup/ThirdQuestion';
 import CompletionPage from '@/app/_components/signup/CompletionPage';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { SignUpRequestBody } from '@/api/auth/types';
-import useSignUp from './SignUpContext';
 
 interface UserinfoPageComponentsProps {
   slug: string;
 }
 
 const SignUpContainer = ({ slug }: UserinfoPageComponentsProps) => {
-  const router = useRouter();
-  const { signUpData, setSignUpData } = useSignUp();
   const pageNum = slug[0];
-
-  const handleNextPage = (updatedData: Partial<SignUpRequestBody>) => {
-    setSignUpData((prevData) => ({
-      ...prevData,
-      ...updatedData,
-    }));
-    router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
-  };
 
   switch (pageNum) {
     case '1':
-      return <CreateAccountForm pageNum={pageNum} onNext={handleNextPage} />;
+      return <CreateAccountForm pageNum={pageNum} />;
     case '2':
       return <UserProfileForm pageNum={pageNum} />;
     case '3':

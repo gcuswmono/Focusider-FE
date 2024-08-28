@@ -6,10 +6,12 @@ import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import Image from 'next/image';
 import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
-import { signUp } from '@/api/auth';
+import { useSignUpMutation } from '@/api/auth';
 import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 import useSignUp from './SignUpContext';
 import useCategory from './CategoryContext';
+import Loading from '../common/atoms/Loading';
 
 interface UserProfileFormProps {
   pageNum: string;
@@ -17,7 +19,7 @@ interface UserProfileFormProps {
 
 const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const router = useRouter();
-  const { req } = useCategory();
+  const { req, setReq } = useCategory();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [localData, setLocalData] = useState<{
     name: string;
@@ -35,42 +37,45 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
     day: '',
   });
   const { signUpData } = useSignUp();
-  const [error] = useState<{
-    name: string | null;
-    gender: string | null;
-    profileImage: string | null;
-    year: string | null;
-    month: string | null;
-    day: string | null;
-  }>({
-    name: null,
-    gender: null,
-    profileImage: null,
-    year: null,
-    month: null,
-    day: null,
+
+  // react-query의 useMutation으로 회원가입 API 호출 처리
+  const { mutate: triggerSignUp, status } = useSignUpMutation({
+    onSuccess: () => {
+      toast.success('회원가입이 완료되었습니다.', {
+        pauseOnHover: false,
+        autoClose: 300, // 0.3초
+      });
+      // 0.3초 후 페이지 이동
+      setTimeout(() => {
+        req.accountId = signUpData.accountId;
+        router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
+      }, 300);
+    },
+    onError: (error: Error) => {
+      toast.error(`회원가입에 실패했습니다: ${error.message}`, {
+        pauseOnHover: false,
+        autoClose: 3000,
+      });
+    },
   });
+
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // signUpData 업데이트
     signUpData.name = localData.name;
     signUpData.gender = localData.gender;
     signUpData.birthday = `${localData.year}-${localData.month}-${localData.day}`;
     signUpData.profileImage = profileImage || '';
-    try {
-      signUp(signUpData); // SignUpContext의 데이터를 사용하여 회원가입 요청
-      toast.success('회원가입이 완료되었습니다.', {
-        pauseOnHover: false,
-        autoClose: 1000,
-      });
-      req.accountId = signUpData.accountId;
-      router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
-    } catch (signupError) {
-      toast.error(`Sign up failed: ${signupError}`, {
-        pauseOnHover: false,
-        autoClose: 1000,
-      });
-    }
+
+    // react-query의 mutate 호출로 회원가입 요청
+    triggerSignUp(signUpData);
   };
+
+  // 로딩 상태일 때 Loading 컴포넌트를 반환
+  if (status === 'pending') {
+    return <Loading />;
+  }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,7 +83,6 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
       ...prev,
       [name]: value,
     }));
-    console.log(localData);
   };
 
   const onGenderSelect = (gender: string) => {
@@ -145,7 +149,6 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
               value={localData.name}
               onChange={onChange}
               placeholder="이름"
-              error={error.name}
             />
           </div>
 
@@ -160,8 +163,6 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
                 value={localData.year}
                 onChange={onChange}
                 placeholder="년"
-                error={error.year}
-                placeholderRight
               />
               <LoginInput
                 type="text"
@@ -169,8 +170,6 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
                 value={localData.month}
                 onChange={onChange}
                 placeholder="월"
-                error={error.month}
-                placeholderRight
               />
               <LoginInput
                 type="text"
@@ -178,8 +177,6 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
                 value={localData.day}
                 onChange={onChange}
                 placeholder="일"
-                error={error.day}
-                placeholderRight
               />
             </div>
           </div>
@@ -191,20 +188,27 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
             <div className="flex h-14 w-full">
               <button
                 type="button"
-                onClick={() => onGenderSelect('male')}
-                className={`grow rounded-l px-4 py-2 ${localData.gender === 'male' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                onClick={() => onGenderSelect('MALE')}
+                className={`grow rounded-l px-4 py-2 ${
+                  localData.gender === 'MALE'
+                    ? 'border border-primary bg-primary/20 text-primary'
+                    : 'border border-white bg-white text-sub-200'
+                }`}
               >
                 남자
               </button>
               <button
                 type="button"
-                onClick={() => onGenderSelect('female')}
-                className={`grow rounded-r px-4 py-2 ${localData.gender === 'female' ? 'border border-primary bg-primary/20 text-primary' : 'border border-white bg-white text-sub-200'}`}
+                onClick={() => onGenderSelect('FEMALE')}
+                className={`grow rounded-r px-4 py-2 ${
+                  localData.gender === 'FEMALE'
+                    ? 'border border-primary bg-primary/20 text-primary'
+                    : 'border border-white bg-white text-sub-200'
+                }`}
               >
                 여자
               </button>
             </div>
-            {error.gender && <span className="text-sm text-negative">{error.gender}</span>}
           </div>
 
           <ButtonAtom

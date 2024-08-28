@@ -4,15 +4,14 @@ import React, { useState } from 'react';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import { useRouter } from 'next/navigation';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
-import { login } from '@/api/auth';
 import { toast } from 'react-toastify';
 import SlideBanner from '@/app/_components/login/SlideBanner';
 import { AppLogoIcon, LogoIcon } from '@/app/_assets/icons';
 import Image from 'next/image';
+import { useLoginMutation } from '@/api/auth';
 
 const LoginPage = () => {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     accountId: '',
     password: '',
@@ -25,13 +24,22 @@ const LoginPage = () => {
     });
   };
 
+  const { mutate: loginUser, status } = useLoginMutation({
+    onSuccess: () => {
+      router.push('/home');
+    },
+    onError: (error: Error) => {
+      toast.error(`로그인 실패: ${error.message}`);
+    },
+  });
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await login(form);
-    if (response.status === 200) {
+    loginUser(form);
+    if (status === 'success') {
       router.push('/home');
     } else {
-      toast.error(`${response.message}`, {
+      toast.error('로그인 실패했습니다.', {
         autoClose: 1000,
         pauseOnHover: false,
       });
@@ -58,7 +66,6 @@ const LoginPage = () => {
                   value={form.accountId}
                   onChange={onChange}
                   placeholder="아이디"
-                  error={error === '사용자를 찾을 수 없습니다.' ? error : null}
                 />
                 <LoginInput
                   type="password"
@@ -66,7 +73,6 @@ const LoginPage = () => {
                   value={form.password}
                   onChange={onChange}
                   placeholder="비밀번호"
-                  error={error && error !== '사용자를 찾을 수 없습니다.' ? error : null}
                 />
                 <ButtonAtom
                   buttonStyle="dark"

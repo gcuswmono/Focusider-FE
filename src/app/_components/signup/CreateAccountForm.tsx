@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginInput from '@/app/_components/common/atoms/LoginInput';
 import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
-import { signUp, SignUpRequestBody } from '@/api/auth';
+import { useDuplicateCheckMutation } from '@/api/auth/queries';
 import useSignUp from './SignUpContext';
+import LoadingOnPost from '../common/atoms/LoadingOnPost';
 
 interface SignupPageProps {
   pageNum: string;
-  onNext: (data: Partial<SignUpRequestBody>) => void;
 }
 
-const CreateAccountForm = ({ pageNum, onNext }: SignupPageProps) => {
+const CreateAccountForm = ({ pageNum }: SignupPageProps) => {
   const [localData, setLocalData] = useState<{
     accountId: string;
     password: string;
@@ -20,7 +20,7 @@ const CreateAccountForm = ({ pageNum, onNext }: SignupPageProps) => {
     accountId: '',
     password: '',
   });
-  const { setSignUpData, signUpData } = useSignUp();
+  const { signUpData } = useSignUp();
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const router = useRouter();
 
@@ -38,6 +38,13 @@ const CreateAccountForm = ({ pageNum, onNext }: SignupPageProps) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // 필드가 변경될 때 해당 필드의 에러 상태를 초기화
+    setError((prevError) => ({
+      ...prevError,
+      [name]: null,
+    }));
+
     if (name === 'confirmPassword') {
       setConfirmPassword(value);
     } else {
@@ -56,29 +63,60 @@ const CreateAccountForm = ({ pageNum, onNext }: SignupPageProps) => {
     }
   }, [confirmPassword, localData.password]);
 
-  const checkIdAvailability = () => {
-    // 아이디 중복확인 로직 추가
-    // 중복 확인 결과에 따라 setIsIdAvailable(true 또는 false) 호출
-  };
-
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!localData.accountId || !localData.password) {
+
+    // 아이디 중복 체크가 완료되지 않았거나 중복된 경우
+    if (isIdAvailable === null) {
+      setError((prev) => ({
+        ...prev,
+        accountId: '아이디 중복 체크를 해주세요.',
+      }));
+      return;
+    }
+
+    if (!localData.accountId || !localData.password || !confirmPassword) {
       setError({
         ...error,
         accountId: !localData.accountId ? '아이디를 입력해주세요.' : null,
         password: !localData.password ? '비밀번호를 입력해주세요.' : null,
+        confirmPassword: !confirmPassword ? '비밀번호를 재입력해주세요.' : null,
       });
       return;
     }
+
+    if (!passwordMatch) {
+      setError((prev) => ({
+        ...prev,
+        confirmPassword: '비밀번호가 일치하지 않습니다.',
+      }));
+      return;
+    }
+
+    // 모든 검증이 통과되면 다음 페이지로 이동
     signUpData.accountId = localData.accountId;
     signUpData.password = localData.password;
-    console.log(signUpData);
     router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
+  };
+
+  const { mutate: checkDuplicate, status } = useDuplicateCheckMutation({
+    onSuccess: (isDuplicated: boolean) => {
+      setIsIdAvailable(!isDuplicated); // 중복 여부에 따라 true/false로 설정
+    },
+    onError: () => {
+      setIsIdAvailable(false); // 에러 시 중복 처리
+    },
+  });
+
+  const checkIdAvailability = () => {
+    if (localData.accountId) {
+      checkDuplicate({ accountId: localData.accountId });
+    }
   };
 
   return (
     <section className="flex w-full items-center justify-center bg-primary-100">
+      {status === 'pending' && <LoadingOnPost screen backgroundOpacity={0.1} />}
       <div className="flex h-dvh w-[440px] flex-col items-center justify-center gap-y-6">
         <h1 className="w-full text-h3 font-bold">계정 생성하기</h1>
         <form className="flex w-full flex-col gap-y-10" onSubmit={handleSignup}>
