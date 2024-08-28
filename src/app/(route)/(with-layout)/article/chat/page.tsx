@@ -81,7 +81,7 @@ const ChatPage = () => {
   return (
     <section className="flex h-dvh w-full flex-col">
       <HeaderNextModule onClick={onEndButtonClick} />
-      <div className="flex-grow overflow-y-auto bg-white px-8 pb-20 pt-6">
+      <div className="flex-grow overflow-y-auto px-8 pb-20 pt-6">
         {isLoading || isSubmitting ? (
           <Loading />
         ) : (
