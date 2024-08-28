@@ -5,8 +5,8 @@ import { BaseResponse, http } from '@/api';
 export const useGetWrongQuizQueryKey = 'useGetWrongQuizQuery';
 
 export const useGetWrongQuizQuery = ({
-                                       pageParam,
-                                     }: {
+  pageParam,
+}: {
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
