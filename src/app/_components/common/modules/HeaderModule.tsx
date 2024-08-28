@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import IconAtom from '@/app/_components/common/atoms/IconAtom';
 import { AppLogoIcon, LogoIcon, LogoutIcon } from '@/app/_assets/icons';
 import { useLogoutMutation } from '@/app/_api/auth/useLogoutMutation';
+import { deleteCookie } from 'cookies-next';
 import Image from 'next/image';
 import React from 'react';
 
@@ -12,6 +13,7 @@ const HeaderModule = () => {
 
   const { mutate: logout } = useLogoutMutation({
     successCallback: () => {
+      deleteCookie('accessToken');
       router.push('/');
     },
     errorCallback: (error) => {
