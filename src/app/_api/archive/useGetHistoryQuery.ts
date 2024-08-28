@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetHistoryQueryKey = 'useGetHistoryQuery';
 
 export const useGetHistoryQuery = ({
-  pageParam,
-}: {
+                                     pageParam,
+                                   }: {
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
-    queryKey: [useGetHistoryQueryKey],
+    queryKey: [useGetHistoryQueryKey, pageParam],
     queryFn: async () => {
       const res = await http.get<BaseResponse<void>>({
         url: '/api/article/reading-list',

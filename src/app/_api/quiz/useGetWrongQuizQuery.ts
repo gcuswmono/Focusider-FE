@@ -5,12 +5,12 @@ import { BaseResponse, http } from '@/api';
 export const useGetWrongQuizQueryKey = 'useGetWrongQuizQuery';
 
 export const useGetWrongQuizQuery = ({
-  pageParam,
-}: {
+                                       pageParam,
+                                     }: {
   pageParam: { page: number; size: number; sort?: string };
 }) => {
   return useQuery({
-    queryKey: [useGetWrongQuizQueryKey],
+    queryKey: [useGetWrongQuizQueryKey, pageParam],
     queryFn: async () => {
       const res = await http.get<BaseResponse<void>>({
         url: '/api/quiz/wrong/list',
