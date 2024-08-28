@@ -7,6 +7,7 @@ import ButtonAtom from '@/app/_components/common/atoms/ButtonAtom';
 import Image from 'next/image';
 import { AddProfileIcon, EmptyProfileIcon } from '@/app/_assets/icons';
 import { useSignUpMutation } from '@/app/_api/auth';
+import { usePostFileMutation } from '@/app/_api/member/usePostFileMutation';
 import { toast } from 'react-toastify';
 import useSignUp from './SignUpContext';
 import useCategory from './CategoryContext';
@@ -37,14 +38,30 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   });
   const { signUpData } = useSignUp();
 
-  // react-query의 useMutation으로 회원가입 API 호출 처리
+  const successCallback = (imageUrl: string) => {
+    setProfileImage(imageUrl);
+    setLocalData((prev) => ({
+      ...prev,
+      profileImage: imageUrl,
+    }));
+  };
+
+  const errorCallback = (error: Error) => {
+    console.error('프로필 이미지 업로드 실패:', error);
+    toast.error('프로필 이미지 업로드에 실패했습니다.');
+  };
+
+  const { mutate: uploadFile } = usePostFileMutation({
+    successCallback,
+    errorCallback,
+  });
+
   const { mutate: triggerSignUp, status } = useSignUpMutation({
     onSuccess: () => {
       toast.success('회원가입이 완료되었습니다.', {
         pauseOnHover: false,
         autoClose: 300, // 0.3초
       });
-      // 0.3초 후 페이지 이동
       setTimeout(() => {
         req.accountId = signUpData.accountId;
         router.push(`/signup/${parseInt(pageNum, 10) + 1}`);
@@ -61,17 +78,14 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // signUpData 업데이트
     signUpData.name = localData.name;
     signUpData.gender = localData.gender;
     signUpData.birthday = `${localData.year}-${localData.month}-${localData.day}`;
     signUpData.profileImage = profileImage || '';
 
-    // react-query의 mutate 호출로 회원가입 요청
     triggerSignUp(signUpData);
   };
 
-  // 로딩 상태일 때 Loading 컴포넌트를 반환
   if (status === 'pending') {
     return <Loading />;
   }
@@ -94,11 +108,7 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      uploadFile({ file }); // 파일 업로드 시작
     }
   };
 
@@ -113,12 +123,16 @@ const UserProfileForm = ({ pageNum }: UserProfileFormProps) => {
                 <Image
                   src={profileImage}
                   alt="미리 보기"
+                  width={118}
+                  height={118}
                   className="h-32 w-32 rounded-full object-cover"
                 />
               ) : (
                 <Image
                   src={EmptyProfileIcon}
                   alt="profile"
+                  width={118}
+                  height={118}
                   className="h-32 w-32 rounded-full object-cover text-gray-300"
                 />
               )}
