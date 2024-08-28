@@ -17,7 +17,46 @@
 
 <br />
 
-## 🧑🏻‍💻 배포 정보
+## 🏃🏻 실행 방법
+
+### 사전 준비물
+
+- pnpm
+- nodejs 20.16
+- android studio
+
+### 테스트 환경
+
+- Galaxy Tab S8 (android 14)
+
+### 실제 테스트 과정
+
+1. git clone 및 패키지 설치
+
+    ```bash
+    git clone https://github.com/gcuswmono/Focusider-FE
+    cd Focusider-FE
+    pnpm install
+    npm run build
+    ```
+
+2. capacitor로 android 설정 및 열기
+
+    ```bash
+    # 만약 android 폴더가 없다면
+    pnpm cap add android
+    pnpm cap sync android
+    pnpm cap open android
+    
+    # 만약 ios에서 테스트 하고 싶다면
+    pnpm cap add ios
+    pnpm cap sync ios
+    pnpm cap open ios
+    ```
+
+3. android studio에서 apk로 추출하고 싶다면,
+
+   `Android Studio` - `Build` - `Build Bundle(s) / APK(s)` - `Build APK(s)`
 
 <br />
 
@@ -98,33 +137,54 @@
 
 <h3> 오늘의 추천 아티클 </h3>
 
-| 아티클                                  | 채팅                                     |
-|--------------------------------------|----------------------------------------|
-| <img width="600" alt="image" src=""> | <video width="600" alt="image" src=""> |
+<table>
+  <tr>
+    <th>아티클</th>
+    <th>채팅</th>
+  </tr>
+  <tr>
+    <td><img width="600" alt="image" src="public/images/article.png" /></td>
+    <td><video width="600" controls>
+          <source src="public/videos/chatbot_interaction.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+    </td>
+  </tr>
+</table>
 
 - 회원가입 시 답변한 정보를 바탕으로 하루에 하나씩 추천 아티클 제공
 - 사용자는 아티클을 읽고, 챗봇과 대화를 나누며 서로 상호작용함
 
-  </br>
+<br />
 
 <h3> 학습 레포트 </h3>
 
-| 학습 레포트 상세보기                                                  |
-|--------------------------------------------------------------|
-| <img width="600" alt="image" src="public/images/stat_1.png"> | 
+<table>
+  <tr>
+    <th>학습 레포트 상세보기</th>
+  </tr>
+  <tr>
+    <td><img width="600" alt="image" src="public/images/stat_1.png" /></td>
+  </tr>
+</table>
 
 - 학습 시간 및 이해도를 그래프 형태로 제공
-- 생성형 AI (GPT-4o mini)가 평가한 코멘트 제공
+- 생성형 AI (GPT-4 mini)가 평가한 코멘트 제공
 
-  </br>
+<br />
 
 <h3> 오늘의 단어 퀴즈 </h3>
 
-| 퀴즈 화면                                                        | 퀴즈 정답 화면                                                     |
-|--------------------------------------------------------------|--------------------------------------------------------------|
-| <img width="600" alt="image" src="public/images/quiz_1.png"> | <img width="600" alt="image" src="public/images/quiz_2.png"> |
+<table>
+  <tr>
+    <th>퀴즈 화면</th>
+    <th>퀴즈 정답 화면</th>
+  </tr>
+  <tr>
+    <td><img width="600" alt="image" src="public/images/quiz_1.png" /></td>
+    <td><img width="600" alt="image" src="public/images/quiz_2.png" /></td>
+  </tr>
+</table>
 
 - 5가지 카테고리(어휘력, 속담, 사자성어, 단어와 표현, 문법)에서 매일 3문제 제공
 - 정답과 해설 제공
-
-</br>
