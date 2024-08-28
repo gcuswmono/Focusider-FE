@@ -4,7 +4,8 @@
   <img src="public/images/cover.png" alt="focusider_cover" />
 </div> -->
 
-[![Video Label](http://img.youtube.com/vi/ZPJ92J426p4/0.jpg)](https://www.youtube.com/watch?v=ZPJ92J426p4)
+[![Video Label](https://raw.githubusercontent.com/gcuswmono/Focusider-FE/main/public/images/cover.png)]
+https://www.youtube.com/watch?v=ZPJ92J426p4
 
 <br />
 
