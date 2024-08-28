@@ -47,7 +47,7 @@
     pnpm cap add android
     pnpm cap sync android
     pnpm cap open android
-    
+
     # 만약 ios에서 테스트 하고 싶다면
     pnpm cap add ios
     pnpm cap sync ios
@@ -82,6 +82,7 @@
                   <img src="https://img.shields.io/badge/react--query-FF4154?style=flat&logo=react-query&logoColor=000000"/>
                   <img src="https://img.shields.io/badge/zod-F8F8FF?style=flat&logo=zod&logoColor=3E67B1"/>
                   <img src="https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=fff" />
+                  <img src="https://img.shields.io/badge/Capacitor-v6.1.2-brightgreen" alt="Capacitor Logo" />
 
 
 </td>
@@ -111,7 +112,7 @@
       </a>
     </td>
 <td align="center" width="150px">
-      <a href="https://github.com/maylh" target="_blank">
+      <a href="https://github.com/mango0422" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/83891638?v=4" alt="서용준" />
       </a>
     </td>
@@ -185,3 +186,64 @@
 
 - 5가지 카테고리(어휘력, 속담, 사자성어, 단어와 표현, 문법)에서 매일 3문제 제공
 - 정답과 해설 제공
+
+
+### 패키지 구조
+
+```
+├── README.md
+├── android
+├── capacitor.config.ts
+├── docker-compose.yml
+├── dockerfile
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+│   └── images
+├── src
+│   ├── app
+│   │   ├── (route)
+│   │   │   ├── (with-layout)
+│   │   │   │   ├── archive
+│   │   │   │   ├── article
+│   │   │   │   ├── home
+│   │   │   │   ├── mypage
+│   │   │   │   ├── quiz
+│   │   │   │   ├── report
+│   │   │   │   └── review
+│   │   │   └── (without-layout)
+│   │   │       └── signup
+│   │   ├── _api
+│   │   │   ├── archive
+│   │   │   ├── article
+│   │   │   ├── auth
+│   │   │   ├── member
+│   │   │   ├── quiz
+│   │   │   ├── report
+│   │   │   └── types.ts
+│   │   ├── _assets
+│   │   │   ├── icons
+│   │   │   └── images
+│   │   ├── _components
+│   │   │   ├── article
+│   │   │   ├── common
+│   │   │   │   ├── atoms
+│   │   │   │   ├── containers
+│   │   │   │   └── modules
+│   │   │   ├── layout
+│   │   │   ├── login
+│   │   │   ├── quiz
+│   │   │   └── signup
+│   │   ├── _types
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── type
+├── tailwind.config.ts
+└── tsconfig.json
+
+```
